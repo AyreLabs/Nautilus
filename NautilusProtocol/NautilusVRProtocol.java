@@ -9,5 +9,4 @@ public class NautilusVRProtocol {
   public static String nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(int terminalID, String displayString) {
       return String.format("Z%d:%s", terminalID, displayString);
   }
-
 }

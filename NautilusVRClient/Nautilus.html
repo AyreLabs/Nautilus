@@ -13,44 +13,14 @@
     // Web Socket Streaming    
     //------------------------------------------------------------------------------------------
     var ws = new WebSocket('ws://127.0.0.1:3000');
-    latestText = "Default Text";
     ws.onopen = function(){
         console.log('Connected to 127.0.0.1:3000!');
     }
     ws.addEventListener("message", function(event) {
         console.log('Received: ' + event.data);
-        //latestText = event.data;
-        var im = document.getElementById("my-text");
-        im.setAttribute('value', event.data);
+        var terminalText = document.getElementById("my-text");
+        terminalText.setAttribute('value', event.data);
     });
-    function getLatestText () {
-        return latestText;
-    }
-  //------------------------------------------------------------------------------------------
-  // Custom Entity
-  //------------------------------------------------------------------------------------------
-  AFRAME.registerComponent('set-sky', {
-    schema: {default:''},
-    init: function() {
-      this.timeout = setInterval(this.updateSky.bind(this), 300);
-      this.sky = this.el;
-    },
-    remove: function() {
-      clearInterval(this.timeout);
-      this.el.removeObject3D(this.object3D);
-    },
-    updateSky: function() {
-        //this.sky.setAttribute( 'src', imsrc);
-        //document.querySelector('#my-image').setAttribute('src', imsrc)
-        var sceneEl = document.querySelector('a-scene');
-        var im = sceneEl.querySelector('#my-text');
-        //this.sky.setAttribute( 'src', this.data + "?" + Math.random());
-        var gottedTextValue = getLatestText();
-        im.setAttribute( 'value', "HELLO");
-        //im.setAttribute( 'value', gottedTextValue);
-    }
-  });
-  //------------------------------------------------------------------------------------------
     </script>
 
     <a-scene>
