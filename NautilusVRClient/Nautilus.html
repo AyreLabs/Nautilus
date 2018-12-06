@@ -13,19 +13,26 @@
     // Web Socket Streaming    
     //------------------------------------------------------------------------------------------
     var ws = new WebSocket('ws://127.0.0.1:3000');
+    latestText = "Default Text";
     ws.onopen = function(){
         console.log('Connected to 127.0.0.1:3000!');
     }
     ws.addEventListener("message", function(event) {
         console.log('Received: ' + event.data);
+        //latestText = event.data;
+        var im = document.getElementById("my-text");
+        im.setAttribute('value', event.data);
     });
+    function getLatestText () {
+        return latestText;
+    }
   //------------------------------------------------------------------------------------------
   // Custom Entity
   //------------------------------------------------------------------------------------------
   AFRAME.registerComponent('set-sky', {
     schema: {default:''},
     init: function() {
-      this.timeout = setInterval(this.updateSky.bind(this), 100);
+      this.timeout = setInterval(this.updateSky.bind(this), 300);
       this.sky = this.el;
     },
     remove: function() {
@@ -33,12 +40,14 @@
       this.el.removeObject3D(this.object3D);
     },
     updateSky: function() {
-      //this.sky.setAttribute( 'src', imsrc);
-      //document.querySelector('#my-image').setAttribute('src', imsrc)
-      //var sceneEl = document.querySelector('a-scene');
-      //var im = sceneEl.querySelector('#my-frame');
-      //this.sky.setAttribute( 'src', this.data + "?" + Math.random());
-      //im.setAttribute( 'src', imsrc);
+        //this.sky.setAttribute( 'src', imsrc);
+        //document.querySelector('#my-image').setAttribute('src', imsrc)
+        var sceneEl = document.querySelector('a-scene');
+        var im = sceneEl.querySelector('#my-text');
+        //this.sky.setAttribute( 'src', this.data + "?" + Math.random());
+        var gottedTextValue = getLatestText();
+        im.setAttribute( 'value', "HELLO");
+        //im.setAttribute( 'value', gottedTextValue);
     }
   });
   //------------------------------------------------------------------------------------------
@@ -50,8 +59,20 @@
       </a-assets>
 
       <a-sky src="#city" rotation="0 -130 0"></a-sky>
-      <a-text font="kelsonsans" value="Puy de Sancy, France" width="6" position="-2.5 0.25 -1.5"
+      <a-text id="my-text" font="kelsonsans" value="Puy de Sancy, France" width="6" position="-2.5 0.25 -1.5"
               rotation="0 15 0"></a-text>
     </a-scene>
   </body>
 </html>
+
+<!-- 
+
+  public static String nautilusRoomTerminalPositionStateUpdateMessageWithTerminalIDPositionXYZAndRotationXYZ(int terminalID, double positionX, double positionY, double positionZ, double rotationX, double rotationY, double rotationZ) {
+      return String.format("Q%d:%lf,%lf,%lf,%lf,%lf,%lf", terminalID, positionX, positionY, positionZ, rotationX, rotationY, rotationZ);
+  }
+
+  public static String nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(int terminalID, String displayString) {
+      return String.format("Z%d:%s", terminalID, displayString);
+  }
+
+-->
