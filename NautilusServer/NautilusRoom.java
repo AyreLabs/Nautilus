@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-public class NautilusRoom implements NautilusRoomObserver NautilusKeyReceiver {
+public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
   private ArrayList<NautilusRoomTerminal> terminalsInTheNautilusRoom = new ArrayList<NautilusRoomTerminal>();
-  private NautilusRoomUpdateListener nautilusRoomUpdateListener = nil;
+  private NautilusRoomUpdateListener nautilusRoomUpdateListener = null;
 
   private NautilusRoom() {
 
@@ -12,25 +12,25 @@ public class NautilusRoom implements NautilusRoomObserver NautilusKeyReceiver {
   //  return this.terminalsInTheNautilusRoom.length;
   //}
 
-  public NautilusRoom newEmptyNautilusRoom() {
+  public static NautilusRoom newEmptyNautilusRoom() {
     return new NautilusRoom();
   }
 
   public void addTerminalToRoom(NautilusRoomTerminal terminalToAddToRoom) {
-    this.terminalsInTheNautilusRoom.addObject(terminalToAddToRoom);
+    this.terminalsInTheNautilusRoom.add(terminalToAddToRoom);
     this.notifyNautilusRoomUpdateListenersThatATerminalWasUpdated(terminalToAddToRoom);
   }
 
   public void receiveNautilusKeyPressForNautilusRoomNumber(NautilusKey keyThatWasPressed, int nautilusRoomNumber) {
-    boolean terminalExistsCorrespondingToRoomNumber = this.terminalsInTheNautilusRoom.count > nautilusRoomNumber && nautilusRoomNumber >= 0;
+    boolean terminalExistsCorrespondingToRoomNumber = this.terminalsInTheNautilusRoom.size() > nautilusRoomNumber && nautilusRoomNumber >= 0;
     if (terminalExistsCorrespondingToRoomNumber) {
-      NautilusRoomTerminal theTerminalOnWhichToPressAKey = this.terminalsInTheNautilusRoom[nautilusRoomNumber];
+      NautilusRoomTerminal theTerminalOnWhichToPressAKey = this.terminalsInTheNautilusRoom.get(nautilusRoomNumber);
       theTerminalOnWhichToPressAKey.pressKeyOnTerminal(keyThatWasPressed);
       this.notifyNautilusRoomUpdateListenersThatATerminalWasUpdated(theTerminalOnWhichToPressAKey);
     }
   }
 
-  public NautilusRoomTerminal getCurrentNautilusRoomTerminals() {
+  public ArrayList<NautilusRoomTerminal>  getCurrentNautilusRoomTerminals() {
     return this.terminalsInTheNautilusRoom;
   }
 

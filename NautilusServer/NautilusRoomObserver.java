@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public interface NautilusRoomObserver {
-  public NautilusRoomTerminal getCurrentNautilusRoomTerminals();
+  public  ArrayList<NautilusRoomTerminal>   getCurrentNautilusRoomTerminals();
 }

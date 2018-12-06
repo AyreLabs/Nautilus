@@ -14,7 +14,7 @@ import org.java_websocket.server.WebSocketServer;
 
 
 
-public class NautilusVRClientManager implements NautilusRoomUpdateListener extends WebSocketServer {
+public class NautilusVRClientManager extends WebSocketServer implements NautilusRoomUpdateListener {
   private NautilusWebSocketClientPool<NautilusVRClient> poolOfConnectedVRClients = new NautilusWebSocketClientPool<NautilusVRClient>();
   private NautilusRoomObserver nautilusRoomObserver;
 
@@ -28,12 +28,13 @@ public class NautilusVRClientManager implements NautilusRoomUpdateListener exten
     }
   }
 
-  public static NautilusKeyboardClientManager createNautilusVRClientManagerAndStartListeningForClientsOnPortWithNautilusRoomObserver(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
+  public static NautilusVRClientManager createNautilusVRClientManagerAndStartListeningForClientsOnPortWithNautilusRoomObserver(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
     NautilusVRClientManager newNautilusVRClientManager = new NautilusVRClientManager(vrPortNumber, nautilusRoomObserver);
     newNautilusVRClientManager.start();
+    return newNautilusVRClientManager;
   }
 
-  private NautilusKeyboardClientManager(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
+  private NautilusVRClientManager(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
     super(new InetSocketAddress(vrPortNumber));
     this.nautilusRoomObserver = nautilusRoomObserver;
   }

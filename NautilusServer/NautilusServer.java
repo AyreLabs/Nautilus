@@ -15,7 +15,7 @@ public class NautilusServer {
         int vrPortNumber = Integer.parseInt(commandLineArguments[1]);
         ArrayList<String> nautilusTerminalConfigurationStrings = new ArrayList<String>();
         for (int commandLineArgumentsIndex = 2; commandLineArgumentsIndex < commandLineArguments.length; commandLineArgumentsIndex++) {
-          nautilusTerminalConfigurationStrings.addObject(commandLineArguments[commandLineArgumentsIndex]);
+          nautilusTerminalConfigurationStrings.add(commandLineArguments[commandLineArgumentsIndex]);
         }
         NautilusServer nautilusServer = NautilusServer.startAndRunNautilusServerWithKeyboardControlPortNumberAndVRPortNumberAndNautilusTerminalConfigurationStrings(
           keyboardControlPortNumber, vrPortNumber, nautilusTerminalConfigurationStrings

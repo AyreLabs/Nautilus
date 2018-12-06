@@ -10,7 +10,7 @@ public class NautilusKey {
 
   private NautilusKey(String nautilusKeyStringDescription) {
     try {
-      nautilusKeyStringDescription = Integer.parseInt(nautilusKeyStringDescription);
+      this.nautilusKeyCode = Integer.parseInt(nautilusKeyStringDescription);
     } catch(Exception exception) {
       exception.printStackTrace();
     }
@@ -26,6 +26,10 @@ public class NautilusKey {
 
   public String getStringRepresentationOfKey() {
     return String.valueOf((char)this.nautilusKeyCode);
+  }
+
+  public boolean isEnterKey() {
+    return this.nautilusKeyCode == 10;
   }
 
 }

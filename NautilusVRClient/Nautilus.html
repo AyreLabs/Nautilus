@@ -9,9 +9,16 @@
   </head>
   <body>
     <script>
-
-
-
+    //------------------------------------------------------------------------------------------
+    // Web Socket Streaming    
+    //------------------------------------------------------------------------------------------
+    var ws = new WebSocket('ws://127.0.0.1:3000');
+    ws.onopen = function(){
+        console.log('Connected to 127.0.0.1:3000!');
+    }
+    ws.addEventListener("message", function(event) {
+        console.log('Received: ' + event.data);
+    });
   //------------------------------------------------------------------------------------------
   // Custom Entity
   //------------------------------------------------------------------------------------------
@@ -28,10 +35,10 @@
     updateSky: function() {
       //this.sky.setAttribute( 'src', imsrc);
       //document.querySelector('#my-image').setAttribute('src', imsrc)
-      var sceneEl = document.querySelector('a-scene');
-      var im = sceneEl.querySelector('#my-frame');
+      //var sceneEl = document.querySelector('a-scene');
+      //var im = sceneEl.querySelector('#my-frame');
       //this.sky.setAttribute( 'src', this.data + "?" + Math.random());
-      im.setAttribute( 'src', imsrc);
+      //im.setAttribute( 'src', imsrc);
     }
   });
   //------------------------------------------------------------------------------------------
@@ -39,7 +46,7 @@
 
     <a-scene>
       <a-assets>
-        <img id="city" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+        <img id="city" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
       </a-assets>
 
       <a-sky src="#city" rotation="0 -130 0"></a-sky>

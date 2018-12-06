@@ -22,7 +22,7 @@ public class NautilusRoomTerminal {
     this.terminalID = terminalID;
 
     String[] terminalConfigurationStringComponents = terminalConfigurationString.split("~");
-    boolean terminalConfigurationStringIsValid = terminalConfigurationStringComponents.count >= 7;
+    boolean terminalConfigurationStringIsValid = terminalConfigurationStringComponents.length >= 7;
     if (terminalConfigurationStringIsValid) {
       try {
         this.positionX = Double.valueOf(terminalConfigurationStringComponents[1]);
@@ -37,7 +37,7 @@ public class NautilusRoomTerminal {
     }
   }
 
-  public NautilusRoomTerminal newNautilusTerminalFromConfigurationStringAndTerminalID(String terminalConfigurationString, int terminalID) {
+  public static NautilusRoomTerminal newNautilusTerminalFromConfigurationStringAndTerminalID(String terminalConfigurationString, int terminalID) {
     return new NautilusRoomTerminal(terminalConfigurationString, terminalID);
   }
 

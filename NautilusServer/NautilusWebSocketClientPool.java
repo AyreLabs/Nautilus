@@ -21,7 +21,7 @@ public class NautilusWebSocketClientPool<CLIENT_OBJECT> {
   }
 
   public List<CLIENT_OBJECT> getListOfAllClientsInPool() {
-    return this.mappingOfWebSocketAddressesToClientObjects.values();
+    return new ArrayList(this.mappingOfWebSocketAddressesToClientObjects.values());
   }
 
 }
