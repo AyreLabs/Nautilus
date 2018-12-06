@@ -1,6 +1,8 @@
 public class NautilusRoomTerminal {
   //private boolean isAValidTerminal = false;
 
+  private int terminalID = 0;
+
   private String currentTerminalCommandResultString = "";
   private String currentTerminalEnteredCommandString = "";
 
@@ -17,8 +19,22 @@ public class NautilusRoomTerminal {
   }
 
   private NautilusRoomTerminal(String terminalConfigurationString, int terminalID) {
-    String[] terminalConfigurationStringComponents = terminalConfigurationString.split("~");
+    this.terminalID = terminalID;
 
+    String[] terminalConfigurationStringComponents = terminalConfigurationString.split("~");
+    boolean terminalConfigurationStringIsValid = terminalConfigurationStringComponents.count >= 7;
+    if (terminalConfigurationStringIsValid) {
+      try {
+        this.positionX = Double.valueOf(terminalConfigurationStringComponents[1]);
+        this.positionY = Double.valueOf(terminalConfigurationStringComponents[2]);
+        this.positionZ = Double.valueOf(terminalConfigurationStringComponents[3]);
+        this.rotationX = Double.valueOf(terminalConfigurationStringComponents[4]);
+        this.rotationY = Double.valueOf(terminalConfigurationStringComponents[5]);
+        this.rotationZ = Double.valueOf(terminalConfigurationStringComponents[6]);
+      } catch (Exception exception) {
+        exception.printStackTrace();
+      }
+    }
   }
 
   public NautilusRoomTerminal newNautilusTerminalFromConfigurationStringAndTerminalID(String terminalConfigurationString, int terminalID) {
@@ -35,7 +51,20 @@ public class NautilusRoomTerminal {
     }
   }
 
-runCommandReturningResult
-  constructNautilusRoomTerminalPositionStateUpdateMessage()
-constructNautilusRoomTerminalDisplayStateUpdateMessage
+
+  public String constructNautilusRoomTerminalPositionStateUpdateMessage() {
+    return NautilusVRProtocol.nautilusRoomTerminalPositionStateUpdateMessageWithTerminalIDPositionXYZAndRotationXYZ(this.terminalID, this.positionX, this.positionY, this.positionZ, this.rotationX, this.rotationY, this.rotationZ);
+  } 
+
+  public String constructNautilusRoomTerminalDisplayStateUpdateMessage() {
+    return NautilusVRProtocol.nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(this.terminalID, this.currentTerminalCommandResultString+this.currentTerminalEnteredCommandString);
+  }
+
+  public String runCommandReturningResult(String commandToRun) {
+    return "EXEC: " + commandToRun;
+  }
+
 }
+
+
+
