@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>360&deg; Image</title>
+    <meta name="description" content="360&deg; Image - A-Frame">
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  </head>
+  <body>
+    <script>
+
+
+
+  //------------------------------------------------------------------------------------------
+  // Custom Entity
+  //------------------------------------------------------------------------------------------
+  AFRAME.registerComponent('set-sky', {
+    schema: {default:''},
+    init: function() {
+      this.timeout = setInterval(this.updateSky.bind(this), 100);
+      this.sky = this.el;
+    },
+    remove: function() {
+      clearInterval(this.timeout);
+      this.el.removeObject3D(this.object3D);
+    },
+    updateSky: function() {
+      //this.sky.setAttribute( 'src', imsrc);
+      //document.querySelector('#my-image').setAttribute('src', imsrc)
+      var sceneEl = document.querySelector('a-scene');
+      var im = sceneEl.querySelector('#my-frame');
+      //this.sky.setAttribute( 'src', this.data + "?" + Math.random());
+      im.setAttribute( 'src', imsrc);
+    }
+  });
+  //------------------------------------------------------------------------------------------
+    </script>
+
+    <a-scene>
+      <a-assets>
+        <img id="city" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+      </a-assets>
+
+      <a-sky src="#city" rotation="0 -130 0"></a-sky>
+      <a-text font="kelsonsans" value="Puy de Sancy, France" width="6" position="-2.5 0.25 -1.5"
+              rotation="0 15 0"></a-text>
+    </a-scene>
+  </body>
+</html>

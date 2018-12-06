@@ -1,0 +1,3 @@
+public interface NautilusRoomUpdateListener {
+  public void receivedNotificationThatANautilusRoomTerminalWasUpdated(NautilusRoomTerminal terminalThatWasUpdated);
+}
