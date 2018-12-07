@@ -2,9 +2,11 @@
     PROJECT
     -------
     Project Nautilus
+    
     DESCRIPTION
     -----------
     ...
+    
     AUTHOR
     ------
     Ayre Labs (2018)
@@ -24,5 +26,4 @@ public class NautilusKeyboardProtocol {
   public static String nautilusKeyStringDescriptionFromKeyboardClientMessage(String keyboardClientMessage) {
       return keyboardClientMessage;
   }
-
 }
