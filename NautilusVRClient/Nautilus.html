@@ -1,48 +1,108 @@
+<!-----------------------------------------------------------------------------------------
+    PROJECT
+    -------
+    Project Nautilus
 
+    DESCRIPTION
+    -----------
+    ...
+
+    AUTHOR
+    ------
+    Ayre Labs (2018)
+------------------------------------------------------------------------------------------>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>360&deg; Image</title>
-    <meta name="description" content="360&deg; Image - A-Frame">
-    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-  </head>
-  <body>
-    <script>
-    //------------------------------------------------------------------------------------------
-    // Web Socket Streaming    
-    //------------------------------------------------------------------------------------------
-    var ws = new WebSocket('ws://127.0.0.1:3000');
-    ws.onopen = function(){
-        console.log('Connected to 127.0.0.1:3000!');
-    }
-    ws.addEventListener("message", function(event) {
-        console.log('Received: ' + event.data);
-        var terminalText = document.getElementById("my-text");
-        terminalText.setAttribute('value', event.data);
-    });
-    </script>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Nautilus VR</title>
+        <meta name="description" content="Project Nautilus VR Client File">
+        <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    </head>
+    
+    <body>
+        <script>
+               
+        //------------------------------------------------------------------------------------------
+        // Web Socket   
+        //------------------------------------------------------------------------------------------
+        var ws = new WebSocket('ws://127.0.0.1:3000');
+        
+        ws.onopen = function(){
+            console.log('Connected to 127.0.0.1:3000!');
+        }
+        
+        ws.addEventListener("message", function(event) {
+            console.log('Received: ' + event.data);
+            parseServerMessage(event.data);
+            //var terminalText = document.getElementById("my-text");
+            //terminalText.setAttribute('value', event.data);
+        });
+            
+        //------------------------------------------------------------------------------------------
+        // Server Message Parsing   
+        //------------------------------------------------------------------------------------------    
+        function parseServerMessage(serverMessage) {
+            var serverMessageTypeCharacterCode = serverMessage.charAt(0);
+            var serverMessageContent = serverMessage.substring(1);
+            if(serverMessageTypeCharacterCode == "Q") {
+                parseTerminalInitializationMessage(serverMessageContent);
+            } 
+            if(serverMessageTypeCharacterCode == "W") {
+                parseTerminalUpdateMessage(serverMessageContent);
+            }
+        }
+            
+        function parseTerminalInitializationMessage(terminalIntitializationMessage) {
+            var initialMessageComponents = terminalIntitializationMessage.split(":");
+            var terminalNumberString = initialMessageComponents[0];
+            var terminalString = "terminal"+terminalNumberString;
+            performTerminalInitializationForTerminalAndInitializationString(terminalString, initialMessageComponents[1]);
+        }
+    
+        function performTerminalInitializationForTerminalAndInitializationString(terminalID, terminalInitialzationString) {
+            var messageComponentsForPositionAndRotation = terminalInitialzationString[1].split(",");
+            var positionString = messageComponentsForPositionAndRotation[0]+messageComponentsForPositionAndRotation[1]+messageComponentsForPositionAndRotation[2];
+            var rotationString = messageComponentsForPositionAndRotation[3]+messageComponentsForPositionAndRotation[4]+messageComponentsForPositionAndRotation[5];
+            var terminalElement = document.getElementById(terminalID);
+            terminalText.setAttribute('position', positionString);
+            terminalText.setAttribute('rotation', rotationString); 
+        }
+            
+        function parseTerminalUpdateMessage(terminalUpdateMessage){
+            var initialMessageComponents = terminalIntitializationMessage.split(":");
+            var terminalNumberString = initialMessageComponents[0];
+            var terminalMessageString = initialMessageComponents[1];
+            var terminalString = "terminal"+terminalNumberString;
+            var terminalElement = document.getElementById(terminalString);
+            terminalText.setAttribute('value', terminalMessageString);
+        }
+            
+        </script>
 
-    <a-scene>
-      <a-assets>
-        <img id="city" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
-      </a-assets>
+        <!--------------------------------------------------------------------------------
+        // A-Frame Markup 
+        ---------------------------------------------------------------------------------->
+        <a-scene>
+            
+            <!-- Image Caching -->
+            <a-assets>
+                <img id="backgroundImage" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+            </a-assets>
 
-      <a-sky src="#city" rotation="0 -130 0"></a-sky>
-      <a-text id="my-text" font="kelsonsans" value="Puy de Sancy, France" width="6" position="-2.5 0.25 -1.5"
-              rotation="0 15 0"></a-text>
-    </a-scene>
-  </body>
+            <!-- Background 360 Image -->
+            <a-sky src="#backgroundImage" rotation="0 -130 0"></a-sky>
+            
+            <!-- Terminal Elements -->
+            <a-text id="terminal1" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 -5.5"
+                    rotation="0 15 0"></a-text>
+            <a-text id="terminal2" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 5.5"
+                    rotation="0 15 0"></a-text>
+            <a-text id="terminal3" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 0.5"
+                    rotation="0 15 0"></a-text>
+            
+        </a-scene>
+    </body>
+    
 </html>
-
-<!-- 
-
-  public static String nautilusRoomTerminalPositionStateUpdateMessageWithTerminalIDPositionXYZAndRotationXYZ(int terminalID, double positionX, double positionY, double positionZ, double rotationX, double rotationY, double rotationZ) {
-      return String.format("Q%d:%lf,%lf,%lf,%lf,%lf,%lf", terminalID, positionX, positionY, positionZ, rotationX, rotationY, rotationZ);
-  }
-
-  public static String nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(int terminalID, String displayString) {
-      return String.format("Z%d:%s", terminalID, displayString);
-  }
-
--->
