@@ -1,8 +1,21 @@
+/*----------------------------------------------------------------------------------------
+    PROJECT
+    -------
+    Project Nautilus
+
+    DESCRIPTION
+    -----------
+    ....
+
+    AUTHOR
+    ------
+    Ayre Labs (2018)
+----------------------------------------------------------------------------------------*/
 
 public class NautilusKey {
   private int nautilusKeyCode = 0;
-  private static final int nautilusRoomKeyCodeBase = 112;
-  private static final int nautilusRoomKeyCodeUpperBound = 123;
+  private static final int nautilusRoomKeyCodeBase = 1112;
+  private static final int nautilusRoomKeyCodeUpperBound = 1123;
 
   public static NautilusKey nautilusKeyWithNautilusKeyStringDescription(String nautilusKeyStringDescription) {
     return new NautilusKey(nautilusKeyStringDescription);

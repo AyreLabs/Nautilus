@@ -53,15 +53,29 @@ public class NautilusKeyboardClientDisplay extends JPanel implements KeyListener
     /*----------------------------------------------------------------------------------------
     KeyListener Implemented Methods
     ----------------------------------------------------------------------------------------*/
+    @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if(this.nautilusKeyListener != null) {
+    	boolean isAFunctionKey = keyEvent.getKeyCode() >= KeyEvent.VK_F1 && keyEvent.getKeyCode() <= KeyEvent.VK_F12;
+    	if (isAFunctionKey) {
+			keyEvent.setKeyCode(keyEvent.getKeyCode()+1000);
+    		if(this.nautilusKeyListener != null) {
+            	this.nautilusKeyListener.listenToKeyPressEvent(keyEvent);
+        	}
+    	}
+    }
+
+ 	@Override
+    public void keyReleased(KeyEvent keyEvent) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) { 
+    	int keyCodeThatHasBeenKackedTogether = (int)keyEvent.getKeyChar();
+    	keyEvent.setKeyCode(keyCodeThatHasBeenKackedTogether);
+		if(this.nautilusKeyListener != null) {
             this.nautilusKeyListener.listenToKeyPressEvent(keyEvent);
         }
     }
-
-    public void keyReleased(KeyEvent keyEvent) { /* Nothing */ }
-
-    public void keyTyped(KeyEvent keyEvent) { /* Nothing */ }
 
     /*----------------------------------------------------------------------------------------
     JPanel Implemented Methods

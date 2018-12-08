@@ -61,6 +61,12 @@ public class NautilusServerConnection implements NautilusKeyListener {
     Nautilus KeyListener Implemented Methods
     ----------------------------------------------------------------------------------------*/
     public void listenToKeyPressEvent(KeyEvent keyEvent) {
-        this.webSocketToServerConnection.send(NautilusKeyboardProtocol.keyPressEventMessageToStringWithKeyEvent(keyEvent));
+        String keyPressedMessageToSend = NautilusKeyboardProtocol.keyPressEventMessageToStringWithKeyEvent(keyEvent);
+        System.out.printf("asd: %s\n", keyPressedMessageToSend);
+        this.webSocketToServerConnection.send(keyPressedMessageToSend);
     }
 }
+
+
+
+
