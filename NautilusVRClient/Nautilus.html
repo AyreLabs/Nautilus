@@ -35,7 +35,7 @@
         
         ws.addEventListener("message", function(event) {
             console.log('Received: ' + event.data);
-            parseServerMessage(event.data);
+            setTimeout(function() {parseServerMessage(event.data)}, 0);
             //var terminalText = document.getElementById("my-text");
             //terminalText.setAttribute('value', event.data);
         });
@@ -49,7 +49,7 @@
             if(serverMessageTypeCharacterCode == "Q") {
                 parseTerminalInitializationMessage(serverMessageContent);
             } 
-            if(serverMessageTypeCharacterCode == "W") {
+            if(serverMessageTypeCharacterCode == "Z") {
                 parseTerminalUpdateMessage(serverMessageContent);
             }
         }
@@ -58,25 +58,46 @@
             var initialMessageComponents = terminalIntitializationMessage.split(":");
             var terminalNumberString = initialMessageComponents[0];
             var terminalString = "terminal"+terminalNumberString;
+            console.log(terminalString);
+            createNewTerminalWithTerminalString(terminalString);
             performTerminalInitializationForTerminalAndInitializationString(terminalString, initialMessageComponents[1]);
+        }
+            
+        function createNewTerminalWithTerminalString(terminalString) {
+            var mainSceneToInsertNewTerminal = document.querySelector('a-scene');
+            var newTerminalHTMLObject = document.createElement('a-text');
+            newTerminalHTMLObject.setAttribute('font', "kelsonsans");
+            newTerminalHTMLObject.setAttribute('id', terminalString);
+            newTerminalHTMLObject.setAttribute('width', "6");
+            mainSceneToInsertNewTerminal.appendChild(newTerminalHTMLObject);
+            
+            /*var mainSceneToInsertNewTerminal = document.getElementById("main_scene");
+            var newTerminalHTMLObject = '<a-text id="'+terminalString+'" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 -5.5" rotation="0 15 0"></a-text>';
+            console.log(newTerminalHTMLObject);
+            console.log(mainSceneToInsertNewTerminal.innerHTML);
+            mainSceneToInsertNewTerminal.innerHTML = newTerminalHTMLObject+mainSceneToInsertNewTerminal.innerHTML;*/
         }
     
         function performTerminalInitializationForTerminalAndInitializationString(terminalID, terminalInitialzationString) {
-            var messageComponentsForPositionAndRotation = terminalInitialzationString[1].split(",");
-            var positionString = messageComponentsForPositionAndRotation[0]+messageComponentsForPositionAndRotation[1]+messageComponentsForPositionAndRotation[2];
-            var rotationString = messageComponentsForPositionAndRotation[3]+messageComponentsForPositionAndRotation[4]+messageComponentsForPositionAndRotation[5];
+            console.log(terminalInitialzationString);
+            var messageComponentsForPositionAndRotation = terminalInitialzationString.split(",");
+            var positionString = messageComponentsForPositionAndRotation[0]+" "+messageComponentsForPositionAndRotation[1]+" "+messageComponentsForPositionAndRotation[2];
+            var rotationString = messageComponentsForPositionAndRotation[3]+" "+messageComponentsForPositionAndRotation[4]+" "+messageComponentsForPositionAndRotation[5];
             var terminalElement = document.getElementById(terminalID);
-            terminalText.setAttribute('position', positionString);
-            terminalText.setAttribute('rotation', rotationString); 
+            console.log(positionString);
+            terminalElement.setAttribute('position', positionString);
+            console.log(rotationString);
+            terminalElement.setAttribute('rotation', rotationString); 
         }
             
         function parseTerminalUpdateMessage(terminalUpdateMessage){
-            var initialMessageComponents = terminalIntitializationMessage.split(":");
+            console.log("performing update");
+            var initialMessageComponents = terminalUpdateMessage.split(":");
             var terminalNumberString = initialMessageComponents[0];
             var terminalMessageString = initialMessageComponents[1];
             var terminalString = "terminal"+terminalNumberString;
             var terminalElement = document.getElementById(terminalString);
-            terminalText.setAttribute('value', terminalMessageString);
+            terminalElement.setAttribute('value', terminalMessageString);
         }
             
         </script>
@@ -84,7 +105,7 @@
         <!--------------------------------------------------------------------------------
         // A-Frame Markup 
         ---------------------------------------------------------------------------------->
-        <a-scene>
+        <a-scene id="main_scene">
             
             <!-- Image Caching -->
             <a-assets>
@@ -94,13 +115,13 @@
             <!-- Background 360 Image -->
             <a-sky src="#backgroundImage" rotation="0 -130 0"></a-sky>
             
-            <!-- Terminal Elements -->
-            <a-text id="terminal1" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 -5.5"
+            <!-- Terminal Elements 
+            <a-text id="terminal0" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 -5.5"
                     rotation="0 15 0"></a-text>
-            <a-text id="terminal2" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 5.5"
+            <a-text id="terminal1" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 5.5"
                     rotation="0 15 0"></a-text>
-            <a-text id="terminal3" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 0.5"
-                    rotation="0 15 0"></a-text>
+            <a-text id="terminal2" font="kelsonsans" value="Default Display" width="6" position="-2.5 0.25 0.5"
+                    rotation="0 15 0"></a-text>-->
             
         </a-scene>
     </body>
