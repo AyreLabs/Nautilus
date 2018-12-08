@@ -1,2 +1,2 @@
 # Exclude all class file
-*.class
+/**/*.class
