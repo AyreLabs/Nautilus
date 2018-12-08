@@ -47,8 +47,19 @@ public class NautilusRoomTerminal {
       this.currentTerminalEnteredCommandString = "";
     } else {
       this.currentTerminalCommandResultString = "";
-      this.currentTerminalEnteredCommandString = this.currentTerminalEnteredCommandString + keyThatWasPressed.getStringRepresentationOfKey();
+      if (keyThatWasPressed.isBackspaceKey()) {
+        this.currentTerminalEnteredCommandString = this.stringByRemovingLastCharacter(this.currentTerminalEnteredCommandString);
+      } else {
+        this.currentTerminalEnteredCommandString = this.currentTerminalEnteredCommandString + keyThatWasPressed.getStringRepresentationOfKey();
+      } 
     }
+  }
+
+  private String stringByRemovingLastCharacter(String str) {
+    if (str != null && str.length() > 0) {
+        str = str.substring(0, str.length() - 1);
+    }
+    return str;
   }
 
 

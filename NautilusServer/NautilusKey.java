@@ -45,4 +45,8 @@ public class NautilusKey {
     return this.nautilusKeyCode == 10;
   }
 
+  public boolean isBackspaceKey() {
+    return this.nautilusKeyCode == 8;
+  }
+
 }
