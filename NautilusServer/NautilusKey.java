@@ -38,6 +38,9 @@ public class NautilusKey {
   }
 
   public String getStringRepresentationOfKey() {
+    if (this.nautilusKeyCode >= 1000) {
+      return "?";
+    }
     return String.valueOf((char)this.nautilusKeyCode);
   }
 
@@ -50,7 +53,15 @@ public class NautilusKey {
   }
 
   public boolean isEscapeKey() {
-    return this.nautilusKeyCode == 27;
+    return this.nautilusKeyCode == 1027;
+  }
+
+  public boolean isLeftArrowKey() {
+    return this.nautilusKeyCode == 1037;
+  }
+
+  public boolean isRightArrowKey() {
+    return this.nautilusKeyCode == 1039;
   }
 
 }

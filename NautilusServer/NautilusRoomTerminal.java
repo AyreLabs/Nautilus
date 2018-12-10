@@ -1,3 +1,13 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 public class NautilusRoomTerminal {
   //private boolean isAValidTerminal = false;
 
@@ -58,30 +68,37 @@ public class NautilusRoomTerminal {
   public void pressKeyInFileEditingMode(NautilusKey keyThatWasPressed) {
     boolean keyPressedWasSaveKey = keyThatWasPressed.isEscapeKey();
     if (keyPressedWasSaveKey) {
-      this.currentTerminalCommandResultString = this.runCommandReturningResult("cd " + this.currentMetaDirectory + ";echo \""+ this.contentsOfCurrentFileBeingEdited.replace('"', '\\"') + "\" > " + this.fileOpenedString);
+      this.currentTerminalCommandResultString = this.runCommandReturningResult("cd " + this.currentMetaDirectory + ";echo \""+ this.contentsOfCurrentFileBeingEdited.replace("\"", "\\\"") + "\" > " + this.fileOpenedString);
       this.inFileEditingMode = false;
     } else if (keyThatWasPressed.isLeftArrowKey()) {
       this.openedFileInsertOffset += 1;
-      if (this.openedFileInsertOffset > this.contentsOfCurrentFileBeingEdited.size())
-        this.openedFileInsertOffset = this.contentsOfCurrentFileBeingEdited.size();
+      if (this.openedFileInsertOffset > this.contentsOfCurrentFileBeingEdited.length())
+        this.openedFileInsertOffset = this.contentsOfCurrentFileBeingEdited.length();
     } else if (keyThatWasPressed.isRightArrowKey()) {
       this.openedFileInsertOffset -= 1;
       if (this.openedFileInsertOffset < 0)
         this.openedFileInsertOffset = 0;
     } else if (keyThatWasPressed.isBackspaceKey()) {
-      if (this.contentsOfCurrentFileBeingEdited.size() > 0) {
-        if (this.contentsOfCurrentFileBeingEdited.size() == this.openedFileInsertOffset) {
-          this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,this.openedFileInsertOffset-1);
+      if (this.contentsOfCurrentFileBeingEdited.length() == this.openedFileInsertOffset) {
+
+      } else 
+      if (this.contentsOfCurrentFileBeingEdited.length() > 0) {
+        if (0 == this.openedFileInsertOffset) {
+          if (this.contentsOfCurrentFileBeingEdited.length() > 0)
+            this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,this.contentsOfCurrentFileBeingEdited.length()-1);
         } else {
-          this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,this.openedFileInsertOffset-1) + this.contentsOfCurrentFileBeingEdited.substring(this.openedFileInsertOffset+1);
+          int midIndex = this.contentsOfCurrentFileBeingEdited.length() - this.openedFileInsertOffset;
+          this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,midIndex) + this.contentsOfCurrentFileBeingEdited.substring(midIndex+1);
         }
       }
     } else {
-      int midIndex = this.contentsOfCurrentFileBeingEdited.size() - this.openedFileInsertOffset;
-      if (this.contentsOfCurrentFileBeingEdited.size() == this.openedFileInsertOffset) {
+      int midIndex = this.contentsOfCurrentFileBeingEdited.length() - this.openedFileInsertOffset;
+      if (this.contentsOfCurrentFileBeingEdited.length() == this.openedFileInsertOffset) {
+        this.contentsOfCurrentFileBeingEdited = keyThatWasPressed.getStringRepresentationOfKey() + this.contentsOfCurrentFileBeingEdited;
+      } else if (0 == this.openedFileInsertOffset) {
         this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited + keyThatWasPressed.getStringRepresentationOfKey();
       } else {
-        this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,midIndex) + keyThatWasPressed.getStringRepresentationOfKey() + this.contentsOfCurrentFileBeingEdited.substring(midIndex);
+        this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,midIndex+1) + keyThatWasPressed.getStringRepresentationOfKey() + this.contentsOfCurrentFileBeingEdited.substring(midIndex+1);
       }
     }
   }
@@ -126,19 +143,27 @@ public class NautilusRoomTerminal {
 
   public String runCommandReturningResult(String commandToRun) {
     String terminalResult = "";
-
-    boolean isAMetaCommand = commandToRun.size() >= 2 && commandToRun.substring(0, 1).equals("~!");
+    System.out.println("command to run:"+commandToRun);
+    //System.out.println(commandToRun.substring(0, 2));
+    System.out.println("hello there");
+    boolean isAMetaCommand = commandToRun.length() >= 2 && commandToRun.substring(0, 2).equals("~!");
     if (isAMetaCommand) {
       String[] componentsOfCommand = commandToRun.split(" ");
+      for(String component: componentsOfCommand) {
+        System.out.println("component: "+component);
+      }
       boolean fileCDCommand = componentsOfCommand[0].equals("~!cd");
       boolean fileEditCommand = componentsOfCommand[0].equals("~!of");
       if (fileCDCommand) {
-        if (componentsOfCommand.size() > 1) {
+        if (componentsOfCommand.length > 1) {
           this.currentMetaDirectory = componentsOfCommand[1];
         }
       }
       if (fileEditCommand) {
-        if (componentsOfCommand.size() > 1) {
+        System.out.println("1");
+        if (componentsOfCommand.length > 1) {
+          System.out.println("2");
+          System.out.println(componentsOfCommand[1]);
           this.changeToFileEditModeWithFileToOpenString(componentsOfCommand[1]);
         }
       }
@@ -155,11 +180,13 @@ public class NautilusRoomTerminal {
     this.inFileEditingMode = true;
     this.openedFileInsertOffset = 0;
     this.fileOpenedString = fileToOpenString;
+    System.out.println("cd " + this.currentMetaDirectory + ";cat "+ fileToOpenString);
     this.contentsOfCurrentFileBeingEdited = this.runSystemCommandReturningResult("cd " + this.currentMetaDirectory + ";cat "+ fileToOpenString);
   }
 
   private String runSystemCommandReturningResult(String commandToRun) {
     String resultOfSystemCommand = "";
+    System.out.println("command we are running: " + commandToRun);
     try {
       String s = null;
       Process p = Runtime.getRuntime().exec(commandToRun);
@@ -173,20 +200,18 @@ public class NautilusRoomTerminal {
             while ((s = stdInput.readLine()) != null) {
                 resultOfSystemCommand = resultOfSystemCommand+s;
             }
+            System.out.println("result of running terminal command: " + resultOfSystemCommand);
             
-            while ((s = stdError.readLine()) != null) {
+           /*while ((s = stdError.readLine()) != null) {
                 resultOfSystemCommand = resultOfSystemCommand+s;
-            }
+            }*/
 
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+      }
+      catch (Exception exception) {
+            exception.printStackTrace();
+      }
     return resultOfSystemCommand;
   }
-
 }
 
 

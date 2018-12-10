@@ -55,7 +55,7 @@ public class NautilusKeyboardClientDisplay extends JPanel implements KeyListener
     ----------------------------------------------------------------------------------------*/
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-    	boolean isAFunctionKey = keyEvent.getKeyCode() >= KeyEvent.VK_F1 && keyEvent.getKeyCode() <= KeyEvent.VK_F12;
+    	boolean isAFunctionKey = (keyEvent.getKeyCode() >= KeyEvent.VK_F1 && keyEvent.getKeyCode() <= KeyEvent.VK_F12) || keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE || keyEvent.getKeyCode() == KeyEvent.VK_LEFT|| keyEvent.getKeyCode() == KeyEvent.VK_RIGHT;
     	if (isAFunctionKey) {
 			keyEvent.setKeyCode(keyEvent.getKeyCode()+1000);
     		if(this.nautilusKeyListener != null) {
