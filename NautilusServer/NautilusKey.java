@@ -49,4 +49,8 @@ public class NautilusKey {
     return this.nautilusKeyCode == 8;
   }
 
+  public boolean isEscapeKey() {
+    return this.nautilusKeyCode == 27;
+  }
+
 }
