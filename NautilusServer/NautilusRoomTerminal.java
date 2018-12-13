@@ -57,13 +57,74 @@ public class NautilusRoomTerminal {
     return new NautilusRoomTerminal(terminalConfigurationString, terminalID);
   }
 
+  public void runNautilusScreenServiceCommand
+
   public void pressKeyOnTerminal(NautilusKey keyThatWasPressed) {
+    if (keyThatWasPressed.isBackspaceKey()) {
+        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectBackspaceIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+    } else if (keyThatWasPressed.isEnterKey()) {
+        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectReturnIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+    } else if (keyThatWasPressed.isEscapeKey()) {
+        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectEscapeIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+    } else {
+        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", Integer.toString(terminalID), keyThatWasPressed.getStringRepresentationOfKey());
+    }
+    this.updateRoomTerminalWithTerminalDisplayInformation();
+  }
+
+  private void updateRoomTerminalWithTerminalDisplayInformation() {
+    String terminalDisplayInfoDump = this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("PullDisplayForTerminalWithID", Integer.toString(terminalID), "");
+    String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", 1);
+    String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
+    int viewportHeight = Integer.parseInt(viewportHeightString);
+    String terminalStringBuffer = terminalDisplayInfoDumpComponents[1];
+    String[] terminalStringBufferLines = terminalStringBuffer.split("\n");
+    String terminalDisplayString = "";
+    for (int terminalStringBufferViewportLineIndex = 0; terminalStringBufferViewportLineIndex< viewportHeight; terminalStringBufferViewportLineIndex++) {
+        terminalDisplayString += terminalStringBufferLines[terminalStringBufferViewportLineIndex+(terminalStringBufferLines.length-viewportHeight-1)] + "\n";
+    }
+    this.currentTerminalCommandResultString = terminalDisplayString;
+  }
+
+    private String runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult(String serviceToRun, String terminalID, String inputParameter) {
+
+        String resultOfSystemCommand = "";
+
+    	try {
+      String s = null;//./filewrite.sh ~ hello test
+       //Process p = Runtime.getRuntime().exec("./filewrite.sh ");
+       Process p = Runtime.getRuntime().exec(new String[] { "./screen_service_for_Nautilus/SSfN_"+serviceToRun+".sh", terminalID, inputParameter});
+            
+      BufferedReader stdInput = new BufferedReader(new 
+                 InputStreamReader(p.getInputStream()));
+
+            BufferedReader stdError = new BufferedReader(new 
+                 InputStreamReader(p.getErrorStream()));
+
+            while ((s = stdInput.readLine()) != null) {
+                resultOfSystemCommand = resultOfSystemCommand+s+"\n";
+            }
+
+           while ((s = stdError.readLine()) != null) {
+                resultOfSystemCommand = resultOfSystemCommand+s+"\n";
+            }
+
+      }
+      catch (Exception exception) {
+            exception.printStackTrace();
+      }
+
+      return resultOfSystemCommand;
+    }
+
+  
+  /*public void pressKeyOnTerminal(NautilusKey keyThatWasPressed) {
     if (inFileEditingMode) {
       this.pressKeyInFileEditingMode(keyThatWasPressed);
     } else {
       this.pressKeyInTerminalEditingMode(keyThatWasPressed);
     }
-  }
+  }*/
 
   public void pressKeyInFileEditingMode(NautilusKey keyThatWasPressed) {
     boolean keyPressedWasSaveKey = keyThatWasPressed.isEscapeKey();
@@ -144,7 +205,7 @@ public class NautilusRoomTerminal {
   public String runCommandReturningResult(String commandToRun) {
     String terminalResult = "";
     System.out.println("command to run:"+commandToRun);
-    //System.out.println(commandToRun.substring(0, 2));
+    System.out.println(commandToRun.substring(0, 2));
     System.out.println("hello there");
     boolean isAMetaCommand = commandToRun.length() >= 2 && commandToRun.substring(0, 2).equals("~!");
     if (isAMetaCommand) {
@@ -186,7 +247,7 @@ public class NautilusRoomTerminal {
 
   private String runSystemCommandReturningResult(String commandToRun) {
     String resultOfSystemCommand = "";
-    System.out.println("command we are running: " + commandToRun);
+    //System.out.println("command we are running: " + commandToRun);
     try {
       String s = null;
       Process p = Runtime.getRuntime().exec(commandToRun);
@@ -200,7 +261,7 @@ public class NautilusRoomTerminal {
             while ((s = stdInput.readLine()) != null) {
                 resultOfSystemCommand = resultOfSystemCommand+s;
             }
-            System.out.println("result of running terminal command: " + resultOfSystemCommand);
+            //System.out.println("result of running terminal command: " + resultOfSystemCommand);
             
            /*while ((s = stdError.readLine()) != null) {
                 resultOfSystemCommand = resultOfSystemCommand+s;

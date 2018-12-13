@@ -1,0 +1,199 @@
+
+
+do:
+./autogen.sh;./configure
+then make
+
+
+
+only changed
+fileio.c so far
+
+
+
+
+
+
+
+224  screen
+  225  screen -r
+  227  screen
+  233  screen
+  234  screen -r
+  243  screen
+  258  screen
+  286  screen
+  287  screen
+  315  screen -r
+  316  screen -r
+  317  screen -r
+  318  screen
+  320  screen
+  333  screen
+  421  screen -r
+  422  screen 
+  423  screen -r
+  424  screen -r
+  425  screen -r
+  436  screen
+  438  screen -r
+  469  screen root@45.63.26.204
+  471  screen -r
+  486  screen
+  504  screen -r
+  505  screen 
+  513  screen -X hardcopy hcpy
+  516  screen -X hardcopy ~/Desktop/test/hcpy
+  524  screen -r
+  525  screen -X hardcopy ~/Desktop/test/hcpy
+  527  screen -r
+  528  screen -X hardcopy ~/Desktop/test/hcpy
+  534  screen -r
+  535  screen -X hardcopy ~/Desktop/test/hcpy
+  537  screen -r
+  538  screen -X hardcopy ~/Desktop/test/hcpy
+  540  screen -S minecraft
+  541  screen -list
+  542  screen -r 4822
+  543  screen -X stuff "stop^M"
+  544  screen -r
+  545  screen -X stuff "h"
+  546  screen -r
+  547  screen -X stuff "hello"
+  548  screen -r
+  549  screen -X stuff "^M"
+  550  screen -r
+  551  screen -X stuff ""
+  552  screen -r
+  553  screen -X stuff "\n"
+  554  screen -r
+m"555  screen -X stuff "h
+  556  screen -r
+  557  screen -X dumptermcap ~/Desktop/test/tcap
+  559  screen -r
+  560  screen -X dumptermcap
+  566  screen dumptermcap
+  567  screen -r
+  568  screen -r
+  569  screen -wipe
+  570  screen -r
+  571  screen
+  572  screen -list
+  573  screen -X hardcopy ~/Desktop/test/hcpy
+  575  screen -r
+  577  screen -X bindkey "^A^[OA"
+  578  screen -r
+  579  screen -r
+  580  screen bindkey "^A^[OA"
+  581  screen -r
+  582  screen -list
+  583  screen
+  584  screen -list
+  585  screen -r        "
+  587  screen -r stuff "
+  588  screen -X stuff "A"
+  589  screen -r
+  590  screen -X stuff "A"
+  591  screen -r
+  594  screen -X stuff "$'\x1b'[H"
+  595  screen -r
+  596  screen -X stuff "$'\x1b'[H"
+  597  screen -r
+  598  screen -X stuff "$'\x01'$'\x1b'OC"
+  599  screen -r
+  600  screen -X stuff "$'\x01' $'\x1b'OC"
+  601  screen -r
+  602  screen -X stuff "$'\x1b'[H"
+  603  screen -r
+  604  screen -X stuff "A"
+  605  screen -r
+  606  screen -X stuff "$'\x01'$'\x1b'OC"
+  607  screen -r
+  608  screen -X stuff "A"
+  609  screen -r
+  610  screen -X stuff $'\x01'$'\x1b'"OC"
+  611  screen -r
+  612  screen -X stuff $'\x01'$'\x1b'"OC"
+  613  screen -r
+  614  screen -X stuff $'\x1b'"OC"
+  615  screen -r
+  616  screen -X stuff $'\x1b'"OC"
+  617  screen -r
+  618  vim ~/.screenrc
+  619  vim /etc/screenrc
+  620  vim ~/.screenrc
+  621  screen
+  622  vim ~/.screenrc
+  623  screen -dmS qwe
+  624  screen -list
+  625  screen -S 16721.qwe -X stuff 'hello\n'
+  626  screen -S 16721.qwe -X hardcopy ~/Desktop/test/hcpy
+  629* screen
+  630  screen -S 16721 -X hardcopy ~/Desktop/test/hcpy
+  633  screen -r 16721
+  634  screen -dmS qwe
+  635  screen -list
+  636  screen -S 16970 -X hardcopy ~/Desktop/test/hcpy
+  638  screen -r
+  639  screen -r 16970
+  640  screen -S 16970 -X hardcopy ~/Desktop/test/hcpy
+  643  screen -S 16970 -X stuff "asd"$'\x0D'
+  644  screen -S 16970 -X hardcopy ~/Desktop/test/hcpy
+  646  screen -list
+  647  screen -S qwe -X hardcopy ~/Desktop/test/hcpy
+  648  screen -S qwe -X stuff "asd"$'\x0D'
+  649  screen -S qwe -X hardcopy ~/Desktop/test/hcpy
+  651  screen -dmS qwe
+  652  screen -list
+  653  screen -r 17465
+  654  screen -r qwe
+  655  screen -r
+  656  screen -dmS asd
+  657  screen -S asd -X hardcopy ~/Desktop/test/hcpy
+  659  screen -S asd -X stuff "asd"$'\x0D'
+  660  screen -S asd -X hardcopy ~/Desktop/test/hcpy
+  662  screen -r asd
+  663  screen -S asd -X stuff "asd"$'\x0D'
+  664  screen -S asd -X hardcopy ~/Desktop/test/hcpy
+  666  screen -r asd
+  668  screen -S www -d -m sh
+  669  screen -list
+  670  screen -S www -X hardcopy ~/Desktop/test/hcpy
+  672  screen -r 17883
+  673  screen -S www -X hardcopy ~/Desktop/test/hcpy
+  674  screen -r 17883
+  675  screen -S www -X hardcopy ~/Desktop/test/hcpy
+  677  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  678  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  679  screen -S www -X stuff "vim qweasd"$'\x0D'
+  680  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  681  screen -S www -X stuff "i"
+  682  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  683  screen -S www -X stuff $'\x01'"i"
+  684  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  685  screen -r
+  686  screen -r 17883
+  687  screen -S www -X info
+  689  screen -S www -X info ~/Desktop/test/hcpy;cat hcpy 
+  690  screen -r www
+  691  screen -S www -X hardcopy -h ~/Desktop/test/hcpy;cat hcpy 
+  692  screen -S www -X hardcopy -h ~/Desktop/test/hcpy;cat hcpy 
+  693  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  694  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  695  screen -S www -X hardcdopy ~/Desktop/test/hcpy;cat hcpy 
+  696  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  697  screen -r www
+  699  cat screenlog.0 
+  700  screen -r www
+  701  screen -S www -X stuff $'\x1b'"[6n"
+  702  screen -r www
+  703  screen -r www
+  704  screen -S www -X stuff $'\x1b'"D"
+  705  screen -r www
+  706  screen -S www -X stuff $'\x1b'"M"
+  707  screen -r www
+  708  screen -S www -X dinfo
+  709  screen -S www -X hardcopy ~/Desktop/test/hcpy;cat hcpy 
+  710  screen -S www -X dinfo ~/Desktop/test/hcpy;cat hcpy 
+  712  screen -r www
+  716  history|grep 'screen'
