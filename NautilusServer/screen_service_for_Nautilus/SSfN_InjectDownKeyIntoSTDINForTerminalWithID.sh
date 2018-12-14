@@ -1,3 +1,3 @@
-#!/bin/sh
+#!/bin/bash
 
-./SSfN_InjectSTDINForTerminalWithIDAndInjectedInput.sh $1 $'\x1b'"OB"
+./screen_service_for_Nautilus/SSfN_InjectSTDINForTerminalWithIDAndInjectedInput.sh $1 $'\x1b'"OB"

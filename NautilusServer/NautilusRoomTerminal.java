@@ -72,14 +72,15 @@ public class NautilusRoomTerminal {
 
   private void updateRoomTerminalWithTerminalDisplayInformation() {
     String terminalDisplayInfoDump = this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("PullDisplayForTerminalWithID", Integer.toString(terminalID), "");
-    String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", 1);
-    System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
+    String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", -1);
+    //System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
     String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
     int viewportHeight = Integer.parseInt(viewportHeightString);
-    String terminalStringBuffer = terminalDisplayInfoDumpComponents[1];
-    String[] terminalStringBufferLines = terminalStringBuffer.split("\n");
+    //String terminalStringBuffer = terminalDisplayInfoDumpComponents[1];
+    String[] terminalStringBufferLines = terminalDisplayInfoDumpComponents;//terminalStringBuffer.split("\n");
     String terminalDisplayString = "";
     for (int terminalStringBufferViewportLineIndex = 0; terminalStringBufferViewportLineIndex< viewportHeight; terminalStringBufferViewportLineIndex++) {
+	//System.out.printf("QQQ:linesLength:%d,height:%d,index:%d\n", terminalStringBufferLines.length, viewportHeight, terminalStringBufferViewportLineIndex);
         terminalDisplayString += terminalStringBufferLines[terminalStringBufferViewportLineIndex+(terminalStringBufferLines.length-viewportHeight-1)] + "\n";
     }
     this.currentTerminalCommandResultString = terminalDisplayString;
@@ -190,7 +191,9 @@ public class NautilusRoomTerminal {
   } 
 
   public String constructNautilusRoomTerminalDisplayStateUpdateMessage() {
-    return NautilusVRProtocol.nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(this.terminalID, this.constructCurrentDisplayString());
+    String currentTerminalDisplay = this.constructCurrentDisplayString();
+    System.out.printf("AAAAAAAAAAA:%s\n", currentTerminalDisplay);
+    return NautilusVRProtocol.nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(this.terminalID, currentTerminalDisplay);
   }
 
   private String constructCurrentDisplayString() {

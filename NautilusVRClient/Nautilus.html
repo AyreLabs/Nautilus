@@ -27,7 +27,7 @@
         //------------------------------------------------------------------------------------------
         // Web Socket   
         //------------------------------------------------------------------------------------------
-        var ws = new WebSocket('ws://127.0.0.1:3000');
+        var ws = new WebSocket('ws://45.77.234.39:3000');
         
         ws.onopen = function(){
             console.log('Connected to 127.0.0.1:3000!');
@@ -86,7 +86,8 @@
             
         function parseTerminalUpdateMessage(terminalUpdateMessage){
             console.log("performing update");
-            var initialMessageComponents = terminalUpdateMessage.split(":");
+            var initialMessageComponentsPrime = terminalUpdateMessage.split(":");
+            var initialMessageComponents = [initialMessageComponentsPrime.shift(), initialMessageComponentsPrime.join(':')];
             var terminalNumberString = initialMessageComponents[0];
             var terminalMessageString = initialMessageComponents[1];
             var terminalString = "terminal"+terminalNumberString;
