@@ -57,8 +57,6 @@ public class NautilusRoomTerminal {
     return new NautilusRoomTerminal(terminalConfigurationString, terminalID);
   }
 
-  public void runNautilusScreenServiceCommand
-
   public void pressKeyOnTerminal(NautilusKey keyThatWasPressed) {
     if (keyThatWasPressed.isBackspaceKey()) {
         this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectBackspaceIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
@@ -75,6 +73,7 @@ public class NautilusRoomTerminal {
   private void updateRoomTerminalWithTerminalDisplayInformation() {
     String terminalDisplayInfoDump = this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("PullDisplayForTerminalWithID", Integer.toString(terminalID), "");
     String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", 1);
+    System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
     String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
     int viewportHeight = Integer.parseInt(viewportHeightString);
     String terminalStringBuffer = terminalDisplayInfoDumpComponents[1];
