@@ -36,7 +36,7 @@ function compileNautilusKeyboardClient()
 
 function runNautilusKeyboardClient()
 {
-    java -cp ./Java-WebSocket-1.3.9.jar:. NautilusKeyboardClientApplication "ws://127.0.0.1:8887"
+    java -cp ./Java-WebSocket-1.3.9.jar:. NautilusKeyboardClientApplication "ws://45.77.234.39:8887"
 }
 
 #------------------------------------------------------------------------------------------

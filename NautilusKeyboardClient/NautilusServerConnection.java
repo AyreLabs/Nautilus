@@ -80,9 +80,12 @@ public class NautilusServerConnection implements NautilusKeyListener {
                 keyEventsToSendToServer.add(nextKeyEvent);
             }
         }
-        String keyPressesMessageToSend = NautilusKeyboardProtocol.keyPressesEventMessageStringWithListOfKeyEvents(keyEventsToSendToServer);
-        System.out.printf("asd: %s\n", keyPressesMessageToSend);
-        this.webSocketToServerConnection.send(keyPressesMessageToSend);
+
+        if (keyEventsToSendToServer.size() > 0) {
+            String keyPressesMessageToSend = NautilusKeyboardProtocol.keyPressesEventMessageStringWithListOfKeyEvents(keyEventsToSendToServer);
+            System.out.printf("asd: %s\n", keyPressesMessageToSend);
+            this.webSocketToServerConnection.send(keyPressesMessageToSend);
+        }
     }
 
     /*----------------------------------------------------------------------------------------
