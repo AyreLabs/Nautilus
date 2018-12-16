@@ -52,12 +52,14 @@ public class NautilusKeyboardClientManager extends WebSocketServer {
 
   @Override
   public void onMessage(WebSocket keyboardClientWebSocketConnection, String message) {
-    NautilusKey keyReceivedFromKeyboardClient = NautilusKey.nautilusKeyWithNautilusKeyStringDescription(NautilusKeyboardProtocol.nautilusKeyStringDescriptionFromKeyboardClientMessage(message));
-    NautilusKeyboardClient keyboardClientThatSentTheKey = this.poolOfConnectedKeyboardClients.getClientFromPoolForWebSocketConnection(keyboardClientWebSocketConnection);
-    if (keyReceivedFromKeyboardClient.isANautilusRoomNumberKey()) {
-      keyboardClientThatSentTheKey.setCurrentlySelectedNautilusRoomNumber(keyReceivedFromKeyboardClient.getSelectedNautilusRoomNumber());
-    } else {
-      this.nautilusKeyReceiver.receiveNautilusKeyPressForNautilusRoomNumber(keyReceivedFromKeyboardClient, keyboardClientThatSentTheKey.getCurrentlySelectedNautilusRoomNumber());
+    for (String nautilusKeyStringDescription : NautilusKeyboardProtocol.nautilusKeyStringDescriptionsFromKeyboardClientMessage(message)) {
+      NautilusKey keyReceivedFromKeyboardClient = NautilusKey.nautilusKeyWithNautilusKeyStringDescription(nautilusKeyStringDescription);
+      NautilusKeyboardClient keyboardClientThatSentTheKey = this.poolOfConnectedKeyboardClients.getClientFromPoolForWebSocketConnection(keyboardClientWebSocketConnection);
+      if (keyReceivedFromKeyboardClient.isANautilusRoomNumberKey()) {
+        keyboardClientThatSentTheKey.setCurrentlySelectedNautilusRoomNumber(keyReceivedFromKeyboardClient.getSelectedNautilusRoomNumber());
+      } else {
+        this.nautilusKeyReceiver.receiveNautilusKeyPressForNautilusRoomNumber(keyReceivedFromKeyboardClient, keyboardClientThatSentTheKey.getCurrentlySelectedNautilusRoomNumber());
+      }
     }
   }
 
