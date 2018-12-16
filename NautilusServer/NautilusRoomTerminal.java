@@ -125,8 +125,9 @@ public class NautilusRoomTerminal {
   }
 
   public boolean terminalHasDirtyDisplay() {
-    return this.terminalDisplayNeedsToBeUpdated 
-      || (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
+    return false;
+    //return this.terminalDisplayNeedsToBeUpdated 
+      //|| (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
   }
 
   public void updateDirtyTerminalDisplay() {
