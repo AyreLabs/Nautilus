@@ -5,12 +5,19 @@ public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
   private NautilusRoomUpdateListener nautilusRoomUpdateListener = null;
 
   private NautilusRoom() {
-
+    this.startRunningThreadToContinuouslyUpdateDirtyTerminalDisplays();
   }
 
-  //public int getNumberOfNautilusRooms() {
-  //  return this.terminalsInTheNautilusRoom.length;
-  //}
+  private void startRunningThreadToContinuouslyUpdateDirtyTerminalDisplays() {
+    new Thread() {
+        public void run() {
+          while(true) {
+            Thread.sleep(50);
+            NautilusRoom.this.updateDirtyTerminalDisplays();
+          }
+        }
+      }.start();
+  }
 
   public static NautilusRoom newEmptyNautilusRoom() {
     return new NautilusRoom();
@@ -26,7 +33,6 @@ public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
     if (terminalExistsCorrespondingToRoomNumber) {
       NautilusRoomTerminal theTerminalOnWhichToPressAKey = this.terminalsInTheNautilusRoom.get(nautilusRoomNumber);
       theTerminalOnWhichToPressAKey.pressKeyOnTerminal(keyThatWasPressed);
-      this.notifyNautilusRoomUpdateListenersThatATerminalWasUpdated(theTerminalOnWhichToPressAKey);
     }
   }
 
@@ -43,4 +49,23 @@ public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
       this.nautilusRoomUpdateListener.receivedNotificationThatANautilusRoomTerminalWasUpdated(nautilusRoomTerminalThatWasUpdated);
     }
   }  
+
+
+  private void updateDirtyTerminalDisplays() {
+    for (NautilusRoomTerminal terminalInTheNautilusRoom : this.terminalsInTheNautilusRoom) {
+      if (terminalInTheNautilusRoom.terminalHasDirtyDisplay()) {
+        terminalInTheNautilusRoom.updateDirtyTerminalDisplay();
+        this.notifyNautilusRoomUpdateListenersThatATerminalWasUpdated(theTerminalOnWhichToPressAKey);
+      }
+    }
+  }
+
 }
+
+
+
+
+
+
+
+

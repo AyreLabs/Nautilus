@@ -13,8 +13,7 @@ public class NautilusRoomTerminal {
 
   private int terminalID = 0;
 
-  private String currentTerminalCommandResultString = "";
-  private String currentTerminalEnteredCommandString = "";
+  private String currentTerminalWindowDisplayString = "";
 
   private double positionX = 0;
   private double positionY = 0;
@@ -24,11 +23,9 @@ public class NautilusRoomTerminal {
   private double rotationZ = 0;
   private double spatialTerminalWidth = 0;
 
-  private boolean inFileEditingMode = false;
-  private String contentsOfCurrentFileBeingEdited = "";
-  private String currentMetaDirectory = "~";
-  private String fileOpenedString = "";
-  private int openedFileInsertOffset = 0;
+  private boolean terminalDisplayNeedsToBeUpdated = true;
+  private long systemTimeThatTerminalDisplayWasLastUpdated = 0;
+  private final static long MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES = 1000;
 
 
   public static String getNautilusFormatDescriptionForTerminalConfigurationString() {
@@ -69,24 +66,10 @@ public class NautilusRoomTerminal {
     } else {
         this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", Integer.toString(terminalID), keyThatWasPressed.getStringRepresentationOfKey());
     }
-    this.updateRoomTerminalWithTerminalDisplayInformation();
+    this.terminalDisplayNeedsToBeUpdated = true;
   }
 
-  private void updateRoomTerminalWithTerminalDisplayInformation() {
-    String terminalDisplayInfoDump = this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("PullDisplayForTerminalWithID", Integer.toString(terminalID), "");
-    String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", -1);
-    //System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
-    String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
-    int viewportHeight = Integer.parseInt(viewportHeightString);
-    //String terminalStringBuffer = terminalDisplayInfoDumpComponents[1];
-    String[] terminalStringBufferLines = terminalDisplayInfoDumpComponents;//terminalStringBuffer.split("\n");
-    String terminalDisplayString = "";
-    for (int terminalStringBufferViewportLineIndex = 0; terminalStringBufferViewportLineIndex< viewportHeight; terminalStringBufferViewportLineIndex++) {
-	//System.out.printf("QQQ:linesLength:%d,height:%d,index:%d\n", terminalStringBufferLines.length, viewportHeight, terminalStringBufferViewportLineIndex);
-        terminalDisplayString += terminalStringBufferLines[terminalStringBufferViewportLineIndex+(terminalStringBufferLines.length-viewportHeight-1)] + "\n";
-    }
-    this.currentTerminalCommandResultString = terminalDisplayString;
-  }
+
 
     private String runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult(String serviceToRun, String terminalID, String inputParameter) {
 
@@ -119,67 +102,6 @@ public class NautilusRoomTerminal {
       return resultOfSystemCommand;
     }
 
-  
-  /*public void pressKeyOnTerminal(NautilusKey keyThatWasPressed) {
-    if (inFileEditingMode) {
-      this.pressKeyInFileEditingMode(keyThatWasPressed);
-    } else {
-      this.pressKeyInTerminalEditingMode(keyThatWasPressed);
-    }
-  }*/
-
-  public void pressKeyInFileEditingMode(NautilusKey keyThatWasPressed) {
-    boolean keyPressedWasSaveKey = keyThatWasPressed.isEscapeKey();
-    if (keyPressedWasSaveKey) {
-      this.currentTerminalCommandResultString = this.runCommandReturningResult("cd " + this.currentMetaDirectory + ";echo \""+ this.contentsOfCurrentFileBeingEdited.replace("\"", "\\\"") + "\" > " + this.fileOpenedString);
-      this.inFileEditingMode = false;
-    } else if (keyThatWasPressed.isLeftArrowKey()) {
-      this.openedFileInsertOffset += 1;
-      if (this.openedFileInsertOffset > this.contentsOfCurrentFileBeingEdited.length())
-        this.openedFileInsertOffset = this.contentsOfCurrentFileBeingEdited.length();
-    } else if (keyThatWasPressed.isRightArrowKey()) {
-      this.openedFileInsertOffset -= 1;
-      if (this.openedFileInsertOffset < 0)
-        this.openedFileInsertOffset = 0;
-    } else if (keyThatWasPressed.isBackspaceKey()) {
-      if (this.contentsOfCurrentFileBeingEdited.length() == this.openedFileInsertOffset) {
-
-      } else 
-      if (this.contentsOfCurrentFileBeingEdited.length() > 0) {
-        if (0 == this.openedFileInsertOffset) {
-          if (this.contentsOfCurrentFileBeingEdited.length() > 0)
-            this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,this.contentsOfCurrentFileBeingEdited.length()-1);
-        } else {
-          int midIndex = this.contentsOfCurrentFileBeingEdited.length() - this.openedFileInsertOffset;
-          this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,midIndex) + this.contentsOfCurrentFileBeingEdited.substring(midIndex+1);
-        }
-      }
-    } else {
-      int midIndex = this.contentsOfCurrentFileBeingEdited.length() - this.openedFileInsertOffset;
-      if (this.contentsOfCurrentFileBeingEdited.length() == this.openedFileInsertOffset) {
-        this.contentsOfCurrentFileBeingEdited = keyThatWasPressed.getStringRepresentationOfKey() + this.contentsOfCurrentFileBeingEdited;
-      } else if (0 == this.openedFileInsertOffset) {
-        this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited + keyThatWasPressed.getStringRepresentationOfKey();
-      } else {
-        this.contentsOfCurrentFileBeingEdited = this.contentsOfCurrentFileBeingEdited.substring(0,midIndex+1) + keyThatWasPressed.getStringRepresentationOfKey() + this.contentsOfCurrentFileBeingEdited.substring(midIndex+1);
-      }
-    }
-  }
-
-  public void pressKeyInTerminalEditingMode(NautilusKey keyThatWasPressed) {
-    if (keyThatWasPressed.isEnterKey()) {
-      this.currentTerminalCommandResultString = this.runCommandReturningResult(this.currentTerminalEnteredCommandString);
-      this.currentTerminalEnteredCommandString = "";
-    } else {
-      this.currentTerminalCommandResultString = "";
-      if (keyThatWasPressed.isBackspaceKey()) {
-        this.currentTerminalEnteredCommandString = this.stringByRemovingLastCharacter(this.currentTerminalEnteredCommandString);
-      } else {
-        this.currentTerminalEnteredCommandString = this.currentTerminalEnteredCommandString + keyThatWasPressed.getStringRepresentationOfKey();
-      } 
-    }
-  }
-
   private String stringByRemovingLastCharacter(String str) {
     if (str != null && str.length() > 0) {
         str = str.substring(0, str.length() - 1);
@@ -194,89 +116,42 @@ public class NautilusRoomTerminal {
 
   public String constructNautilusRoomTerminalDisplayStateUpdateMessage() {
     String currentTerminalDisplay = this.constructCurrentDisplayString();
-    System.out.printf("AAAAAAAAAAA:%s\n", currentTerminalDisplay);
+    //System.out.printf("AAAAAAAAAAA:%s\n", currentTerminalDisplay);
     return NautilusVRProtocol.nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(this.terminalID, currentTerminalDisplay);
   }
 
   private String constructCurrentDisplayString() {
-    if (this.inFileEditingMode) {
-      return "~~~EDIT FILE~~~\n"+this.contentsOfCurrentFileBeingEdited;
-    } else {
-      return this.currentTerminalCommandResultString+this.currentTerminalEnteredCommandString;
+      return this.currentTerminalWindowDisplayString;
+  }
+
+  public boolean terminalHasDirtyDisplay() {
+    return this.terminalDisplayNeedsToBeUpdated 
+      || (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
+  }
+
+  public void updateDirtyTerminalDisplay() {
+    this.updateRoomTerminalWithNewTerminalDisplayInformation();
+    this.terminalDisplayNeedsToBeUpdated = false;
+    this.systemTimeThatTerminalDisplayWasLastUpdated = System.currentTimeMillis();
+  }
+
+
+  private void updateRoomTerminalWithNewTerminalDisplayInformation() {
+    String terminalDisplayInfoDump = this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("PullDisplayForTerminalWithID", Integer.toString(terminalID), "");
+    String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", -1);
+    //System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
+    String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
+    int viewportHeight = Integer.parseInt(viewportHeightString);
+    //String terminalStringBuffer = terminalDisplayInfoDumpComponents[1];
+    String[] terminalStringBufferLines = terminalDisplayInfoDumpComponents;//terminalStringBuffer.split("\n");
+    String terminalDisplayString = "";
+    for (int terminalStringBufferViewportLineIndex = 0; terminalStringBufferViewportLineIndex< viewportHeight; terminalStringBufferViewportLineIndex++) {
+  //System.out.printf("QQQ:linesLength:%d,height:%d,index:%d\n", terminalStringBufferLines.length, viewportHeight, terminalStringBufferViewportLineIndex);
+        terminalDisplayString += terminalStringBufferLines[terminalStringBufferViewportLineIndex+(terminalStringBufferLines.length-viewportHeight-1)] + "\n";
     }
+    this.currentTerminalCommandResultString = terminalDisplayString;
   }
 
-  public String runCommandReturningResult(String commandToRun) {
-    String terminalResult = "";
-    System.out.println("command to run:"+commandToRun);
-    System.out.println(commandToRun.substring(0, 2));
-    System.out.println("hello there");
-    boolean isAMetaCommand = commandToRun.length() >= 2 && commandToRun.substring(0, 2).equals("~!");
-    if (isAMetaCommand) {
-      String[] componentsOfCommand = commandToRun.split(" ");
-      for(String component: componentsOfCommand) {
-        System.out.println("component: "+component);
-      }
-      boolean fileCDCommand = componentsOfCommand[0].equals("~!cd");
-      boolean fileEditCommand = componentsOfCommand[0].equals("~!of");
-      if (fileCDCommand) {
-        if (componentsOfCommand.length > 1) {
-          this.currentMetaDirectory = componentsOfCommand[1];
-        }
-      }
-      if (fileEditCommand) {
-        System.out.println("1");
-        if (componentsOfCommand.length > 1) {
-          System.out.println("2");
-          System.out.println(componentsOfCommand[1]);
-          this.changeToFileEditModeWithFileToOpenString(componentsOfCommand[1]);
-        }
-      }
-    } else {
-      //normal terminal command
-      terminalResult = this.runSystemCommandReturningResult("cd " + this.currentMetaDirectory + ";" + commandToRun);
-    }
-
-    return terminalResult;
-  }
-
-
-  private void changeToFileEditModeWithFileToOpenString(String fileToOpenString) {
-    this.inFileEditingMode = true;
-    this.openedFileInsertOffset = 0;
-    this.fileOpenedString = fileToOpenString;
-    System.out.println("cd " + this.currentMetaDirectory + ";cat "+ fileToOpenString);
-    this.contentsOfCurrentFileBeingEdited = this.runSystemCommandReturningResult("cd " + this.currentMetaDirectory + ";cat "+ fileToOpenString);
-  }
-
-  private String runSystemCommandReturningResult(String commandToRun) {
-    String resultOfSystemCommand = "";
-    //System.out.println("command we are running: " + commandToRun);
-    try {
-      String s = null;
-      Process p = Runtime.getRuntime().exec(commandToRun);
-            
-      BufferedReader stdInput = new BufferedReader(new 
-                 InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new 
-                 InputStreamReader(p.getErrorStream()));
-
-            while ((s = stdInput.readLine()) != null) {
-                resultOfSystemCommand = resultOfSystemCommand+s;
-            }
-            //System.out.println("result of running terminal command: " + resultOfSystemCommand);
-            
-           /*while ((s = stdError.readLine()) != null) {
-                resultOfSystemCommand = resultOfSystemCommand+s;
-            }*/
-
-      }
-      catch (Exception exception) {
-            exception.printStackTrace();
-      }
-    return resultOfSystemCommand;
-  }
 }
 
 
