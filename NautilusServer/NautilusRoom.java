@@ -12,7 +12,11 @@ public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
     new Thread() {
         public void run() {
           while(true) {
-            Thread.sleep(50);
+            try {
+              Thread.sleep(50);
+            } catch (Exception exception) {
+              exception.printStackTrace();
+            }
             NautilusRoom.this.updateDirtyTerminalDisplays();
           }
         }
@@ -55,7 +59,7 @@ public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
     for (NautilusRoomTerminal terminalInTheNautilusRoom : this.terminalsInTheNautilusRoom) {
       if (terminalInTheNautilusRoom.terminalHasDirtyDisplay()) {
         terminalInTheNautilusRoom.updateDirtyTerminalDisplay();
-        this.notifyNautilusRoomUpdateListenersThatATerminalWasUpdated(theTerminalOnWhichToPressAKey);
+        this.notifyNautilusRoomUpdateListenersThatATerminalWasUpdated(terminalInTheNautilusRoom);
       }
     }
   }

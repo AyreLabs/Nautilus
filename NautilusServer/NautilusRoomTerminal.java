@@ -149,7 +149,7 @@ public class NautilusRoomTerminal {
   //System.out.printf("QQQ:linesLength:%d,height:%d,index:%d\n", terminalStringBufferLines.length, viewportHeight, terminalStringBufferViewportLineIndex);
         terminalDisplayString += terminalStringBufferLines[terminalStringBufferViewportLineIndex+(terminalStringBufferLines.length-viewportHeight-1)] + "\n";
     }
-    this.currentTerminalCommandResultString = terminalDisplayString;
+    this.currentTerminalWindowDisplayString = terminalDisplayString;
   }
 
 }

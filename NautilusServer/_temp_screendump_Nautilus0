@@ -1,4 +1,4 @@
-WINDOW_INFO:cursor=68,13|viewport=102,24
+WINDOW_INFO:cursor=21,13|viewport=102,24
 nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$ cd
 nautilus@Nautilus:~$ ls
 Nautilus  README.md  shinatra.sh  video360.mp4
@@ -12,7 +12,7 @@ nautilus@Nautilus:~$ ls
 Nautilus  README.md  shinatra.sh  video360.mp4
 nautilus@Nautilus:~$ ls
 Nautilus  README.md  shinatra.sh  video360.mp4
-nautilus@Nautilus:~$ Frank Sinatra Eat My Shorts hellorravhhhhhhhhhh
+nautilus@Nautilus:~$
 
 
 
