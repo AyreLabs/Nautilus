@@ -25,7 +25,7 @@ public class NautilusRoomTerminal {
 
   private boolean terminalDisplayNeedsToBeUpdated = true;
   private long systemTimeThatTerminalDisplayWasLastUpdated = 0;
-  private final static long MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES = 1000;
+  private final static long MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES = 1500;
 
 
   public static String getNautilusFormatDescriptionForTerminalConfigurationString() {
