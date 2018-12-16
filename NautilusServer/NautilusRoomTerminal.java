@@ -22,6 +22,7 @@ public class NautilusRoomTerminal {
   private double rotationX = 0;
   private double rotationY = 0;
   private double rotationZ = 0;
+  private double spatialTerminalWidth = 0;
 
   private boolean inFileEditingMode = false;
   private String contentsOfCurrentFileBeingEdited = "";
@@ -31,7 +32,7 @@ public class NautilusRoomTerminal {
 
 
   public static String getNautilusFormatDescriptionForTerminalConfigurationString() {
-    return "terminal_initilisation_string~position-x~position-y~position-z~rotation-x~rotation-y~rotation-z";
+    return "terminal_initilisation_string~position-x~position-y~position-z~rotation-x~rotation-y~rotation-z~spatialTerminalWidth";
   }
 
   private NautilusRoomTerminal(String terminalConfigurationString, int terminalID) {
@@ -47,6 +48,7 @@ public class NautilusRoomTerminal {
         this.rotationX = Double.valueOf(terminalConfigurationStringComponents[4]);
         this.rotationY = Double.valueOf(terminalConfigurationStringComponents[5]);
         this.rotationZ = Double.valueOf(terminalConfigurationStringComponents[6]);
+        this.spatialTerminalWidth = Double.valueOf(terminalConfigurationStringComponents[7]);
       } catch (Exception exception) {
         exception.printStackTrace();
       }
@@ -187,7 +189,7 @@ public class NautilusRoomTerminal {
 
 
   public String constructNautilusRoomTerminalPositionStateUpdateMessage() {
-    return NautilusVRProtocol.nautilusRoomTerminalPositionStateUpdateMessageWithTerminalIDPositionXYZAndRotationXYZ(this.terminalID, this.positionX, this.positionY, this.positionZ, this.rotationX, this.rotationY, this.rotationZ);
+    return NautilusVRProtocol.nautilusRoomTerminalPositionStateUpdateMessageWithTerminalIDPositionXYZAndRotationXYZAndSpatialTerminalWidth(this.terminalID, this.positionX, this.positionY, this.positionZ, this.rotationX, this.rotationY, this.rotationZ, this.spatialTerminalWidth);
   } 
 
   public String constructNautilusRoomTerminalDisplayStateUpdateMessage() {

@@ -485,9 +485,11 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
         function createNewTerminalWithTerminalString(terminalString) {
             var mainSceneToInsertNewTerminal = document.querySelector('a-scene');
             var newTerminalHTMLObject = document.createElement('a-text');
-            newTerminalHTMLObject.setAttribute('font', "kelsonsans");
+            newTerminalHTMLObject.setAttribute('font', "monoid");
             newTerminalHTMLObject.setAttribute('id', terminalString);
-            newTerminalHTMLObject.setAttribute('width', "6");
+            newTerminalHTMLObject.setAttribute('width', "10");
+            newTerminalHTMLObject.setAttribute('wrap-count', "200");
+            newTerminalHTMLObject.setAttribute('color', "blue");
             mainSceneToInsertNewTerminal.appendChild(newTerminalHTMLObject);
         }
     
@@ -496,11 +498,14 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
             var messageComponentsForPositionAndRotation = terminalInitialzationString.split(",");
             var positionString = messageComponentsForPositionAndRotation[0]+" "+messageComponentsForPositionAndRotation[1]+" "+messageComponentsForPositionAndRotation[2];
             var rotationString = messageComponentsForPositionAndRotation[3]+" "+messageComponentsForPositionAndRotation[4]+" "+messageComponentsForPositionAndRotation[5];
+            var widthString = messageComponentsForPositionAndRotation[6];
             var terminalElement = document.getElementById(terminalID);
             console.log(positionString);
             terminalElement.setAttribute('position', positionString);
             console.log(rotationString);
-            terminalElement.setAttribute('rotation', rotationString); 
+            terminalElement.setAttribute('rotation', rotationString);
+            terminalElement.setAttribute('width', widthString);
+             
         }
             
         function parseTerminalUpdateMessage(terminalUpdateMessage){
@@ -523,11 +528,13 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
             
             <!-- Image Caching -->
             <a-assets>
-                <img id="backgroundImage" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+                <img id="backgroundImage" crossorigin="anonymous" src="http://45.77.234.39/background.jpg">
+                <video id="video360" crossorigin="anonymous" src="https://gcs-vimeo.akamaized.net/exp=1544864934~acl=%2A%2F746369181.mp4%2A~hmac=8e654c3c40b44a34d8b4ea012afea1a8d66531f65fe6549ec9fd2114c007df6c/vimeo-prod-skyfire-std-us/01/3196/8/215984159/746369181.mp4?download=1&filename=360%2FVR+Master+Series+%7C+Free+Download+%7C+Crystal+Shower+Falls.mp4">
             </a-assets>
-
+            
             <!-- Background 360 Image -->
-            <a-sky src="#backgroundImage" rotation="0 -130 0"></a-sky> 
+            <a-sky src="#backgroundImage" rotation="0 -130 0"></a-sky>
+            <!--<a-videosphere src="#video360"></a-videosphere>-->
         </a-scene>
     </body>
     
