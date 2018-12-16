@@ -60,7 +60,8 @@ public class NautilusRoomTerminal {
     if (keyThatWasPressed.isBackspaceKey()) {
         this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectBackspaceIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
     } else if (keyThatWasPressed.isEnterKey()) {
-        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectReturnIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", Integer.toString(terminalID), '\13' + "ef");
+        //this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectReturnIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
     } else if (keyThatWasPressed.isEscapeKey()) {
         this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectEscapeIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
     } else {
@@ -125,9 +126,9 @@ public class NautilusRoomTerminal {
   }
 
   public boolean terminalHasDirtyDisplay() {
-    //return false;
-    return this.terminalDisplayNeedsToBeUpdated 
-      || (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
+    return false;
+    //return this.terminalDisplayNeedsToBeUpdated 
+      //|| (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
   }
 
   public void updateDirtyTerminalDisplay() {
