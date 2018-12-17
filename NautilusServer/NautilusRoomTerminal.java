@@ -108,8 +108,11 @@ public class NautilusRoomTerminal {
 
   private void updateRoomTerminalWithNewTerminalDisplayInformation() {
     String terminalDisplayInfoDump = this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("PullDisplayForTerminalWithID");
+    this.currentTerminalWindowDisplayString = terminalDisplayInfoDump;
     //System.out.printf("AAA: %s\n", terminalDisplayInfoDump);
 
+
+/*
     String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", -1);
     //System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
     String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
@@ -122,6 +125,8 @@ public class NautilusRoomTerminal {
         terminalDisplayString += terminalStringBufferLines[terminalStringBufferViewportLineIndex+(terminalStringBufferLines.length-viewportHeight-1)] + "\n";
     }
     this.currentTerminalWindowDisplayString = terminalDisplayString;
+  */
+
   }
 
 }
