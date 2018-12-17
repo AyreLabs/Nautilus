@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class NautilusRoomTerminal {
-  //private boolean isAValidTerminal = false;
 
   private int terminalID = 0;
 
@@ -27,6 +26,8 @@ public class NautilusRoomTerminal {
   private long systemTimeThatTerminalDisplayWasLastUpdated = 0;
   private final static long MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES = 1500;
 
+  private NautilusTerminalService terminalServiceForThisNautilusTerminal;
+
 
   public static String getNautilusFormatDescriptionForTerminalConfigurationString() {
     return "terminal_initilisation_string~position-x~position-y~position-z~rotation-x~rotation-y~rotation-z~spatialTerminalWidth";
@@ -34,6 +35,7 @@ public class NautilusRoomTerminal {
 
   private NautilusRoomTerminal(String terminalConfigurationString, int terminalID) {
     this.terminalID = terminalID;
+    this.terminalServiceForThisNautilusTerminal = NautilusTerminalService.startTerminalServiceForTerminalWithID(terminalID);
 
     String[] terminalConfigurationStringComponents = terminalConfigurationString.split("~");
     boolean terminalConfigurationStringIsValid = terminalConfigurationStringComponents.length >= 7;
@@ -58,50 +60,16 @@ public class NautilusRoomTerminal {
 
   public void pressKeyOnTerminal(NautilusKey keyThatWasPressed) {
     if (keyThatWasPressed.isBackspaceKey()) {
-        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectBackspaceIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("InjectBackspaceIntoSTDINForTerminalWithID");
     } else if (keyThatWasPressed.isEnterKey()) {
-        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", Integer.toString(terminalID), '\13' + "ef");
-        //this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectReturnIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("InjectReturnIntoSTDINForTerminalWithID");
     } else if (keyThatWasPressed.isEscapeKey()) {
-        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectEscapeIntoSTDINForTerminalWithID", Integer.toString(terminalID), "");
+        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("InjectEscapeIntoSTDINForTerminalWithID");
     } else {
-        this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", Integer.toString(terminalID), keyThatWasPressed.getStringRepresentationOfKey());
+        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", keyThatWasPressed.getStringRepresentationOfKey());
     }
     this.terminalDisplayNeedsToBeUpdated = true;
   }
-
-
-
-    private String runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult(String serviceToRun, String terminalID, String inputParameter) {
-
-        String resultOfSystemCommand = "";
-
-    	try {
-      String s = null;//./filewrite.sh ~ hello test
-       //Process p = Runtime.getRuntime().exec("./filewrite.sh ");
-       Process p = Runtime.getRuntime().exec(new String[] { "./screen_service_for_Nautilus/SSfN_"+serviceToRun+".sh", terminalID, inputParameter});
-            
-      BufferedReader stdInput = new BufferedReader(new 
-                 InputStreamReader(p.getInputStream()));
-
-            BufferedReader stdError = new BufferedReader(new 
-                 InputStreamReader(p.getErrorStream()));
-
-            while ((s = stdInput.readLine()) != null) {
-                resultOfSystemCommand = resultOfSystemCommand+s+"\n";
-            }
-
-           while ((s = stdError.readLine()) != null) {
-                resultOfSystemCommand = resultOfSystemCommand+s+"\n";
-            }
-
-      }
-      catch (Exception exception) {
-            exception.printStackTrace();
-      }
-
-      return resultOfSystemCommand;
-    }
 
   private String stringByRemovingLastCharacter(String str) {
     if (str != null && str.length() > 0) {
@@ -139,7 +107,9 @@ public class NautilusRoomTerminal {
 
 
   private void updateRoomTerminalWithNewTerminalDisplayInformation() {
-    String terminalDisplayInfoDump = this.runNautilusScreenServiceOnTerminalWithIDAndInputParameterReturningResult("PullDisplayForTerminalWithID", Integer.toString(terminalID), "");
+    String terminalDisplayInfoDump = this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("PullDisplayForTerminalWithID");
+
+
     String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", -1);
     //System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);
     String viewportHeightString = (terminalDisplayInfoDumpComponents[0].split(","))[2];
