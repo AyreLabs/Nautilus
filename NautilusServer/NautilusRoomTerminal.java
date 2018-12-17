@@ -94,9 +94,9 @@ public class NautilusRoomTerminal {
   }
 
   public boolean terminalHasDirtyDisplay() {
-    return false;
-    //return this.terminalDisplayNeedsToBeUpdated 
-      //|| (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
+    //return false;
+    return this.terminalDisplayNeedsToBeUpdated 
+      || (System.currentTimeMillis() - this.systemTimeThatTerminalDisplayWasLastUpdated) > MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES;
   }
 
   public void updateDirtyTerminalDisplay() {
@@ -108,7 +108,7 @@ public class NautilusRoomTerminal {
 
   private void updateRoomTerminalWithNewTerminalDisplayInformation() {
     String terminalDisplayInfoDump = this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("PullDisplayForTerminalWithID");
-
+    //System.out.printf("AAA: %s\n", terminalDisplayInfoDump);
 
     String[] terminalDisplayInfoDumpComponents = terminalDisplayInfoDump.split("\n", -1);
     //System.out.printf("AAA: %s\n", terminalDisplayInfoDumpComponents[0]);

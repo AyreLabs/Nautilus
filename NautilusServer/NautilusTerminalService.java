@@ -49,12 +49,14 @@ public class NautilusTerminalService {
             String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
             this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
 
+            String seperator = "";
             while (true) {
                 String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
                 if (nextInputLineReceived.equals("END")) {
                     break;
                 } else {
-                    resultOfCommandReceivedFromService += this.inputStreamFromTerminalCommandService.readLine();
+                    resultOfCommandReceivedFromService += seperator + this.inputStreamFromTerminalCommandService.readLine();
+                    seperator = "\n";
                 }
             }
         } catch(Exception exception) {
