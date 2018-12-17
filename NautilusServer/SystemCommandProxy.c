@@ -86,7 +86,7 @@ void socketSend(int socket, void* data, long length) {
 }
 
 void socketSendString(int socket, char *str) {
-	printf ("%s\n", str);
+	//printf ("%s\n", str);
     socketSend(socket, str, strlen(str));
 	socketSend(socket, "\n", strlen("\n"));
 }
