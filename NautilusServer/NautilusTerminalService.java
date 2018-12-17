@@ -40,24 +40,27 @@ public class NautilusTerminalService {
 
 
 	public String runNautilusTerminalServiceCommandAndReturningResult(String terminalServiceCommand) {
-		this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
+		return this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
 	}
 
 	public synchronized String runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(String terminalServiceCommand, String inputParameter) {
-		String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
-		this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
-		String resultOfCommandReceivedFromService = "";
+        String resultOfCommandReceivedFromService = "";
+		try {
+            String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
+            this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
 
-		while (true) {
-			String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
-			if (nextInputLineReceived.equals("END")) {
-				break;
-			} else {
-				resultOfCommandReceivedFromService += this.inputStreamFromTerminalCommandService.readLine();
-			}
-		}
-
-		return resultOfCommandReceivedFromService;
+            while (true) {
+                String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
+                if (nextInputLineReceived.equals("END")) {
+                    break;
+                } else {
+                    resultOfCommandReceivedFromService += this.inputStreamFromTerminalCommandService.readLine();
+                }
+            }
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultOfCommandReceivedFromService;
 	}
 
 
