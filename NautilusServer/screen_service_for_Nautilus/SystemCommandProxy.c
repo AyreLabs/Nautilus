@@ -132,7 +132,7 @@ int systemCommand(int client, char *cmd, int outputToClient) {
 	    pclose(fp);
     }
     	
-	if (outputToClient) 
+	if (outputToClient && input > 0) 
 		socketSendString(client, "END");
 
 	return input;

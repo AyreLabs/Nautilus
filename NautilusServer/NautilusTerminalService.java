@@ -43,6 +43,10 @@ public class NautilusTerminalService {
 		return this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
 	}
 
+	public String runResponselessNautilusTerminalServiceCommand(String terminalServiceCommand) {
+		return this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
+	}
+
 	public synchronized String runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(String terminalServiceCommand, String inputParameter) {
         String resultOfCommandReceivedFromService = "";
 		try {
@@ -65,6 +69,15 @@ public class NautilusTerminalService {
         return resultOfCommandReceivedFromService;
 	}
 
+	public void runResponselessNautilusTerminalServiceCommandWithInputParameter(String terminalServiceCommand, String inputParameter) {
+		try {
+            String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
+            this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
+
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+	}
 
 	//clientSocket.close();
 

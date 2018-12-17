@@ -60,13 +60,13 @@ public class NautilusRoomTerminal {
 
   public void pressKeyOnTerminal(NautilusKey keyThatWasPressed) {
     if (keyThatWasPressed.isBackspaceKey()) {
-        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("InjectBackspaceIntoSTDINForTerminalWithID");
+        this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectBackspaceIntoSTDINForTerminalWithID");
     } else if (keyThatWasPressed.isEnterKey()) {
-        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("InjectReturnIntoSTDINForTerminalWithID");
+        this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectReturnIntoSTDINForTerminalWithID");
     } else if (keyThatWasPressed.isEscapeKey()) {
-        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandAndReturningResult("InjectEscapeIntoSTDINForTerminalWithID");
+        this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectEscapeIntoSTDINForTerminalWithID");
     } else {
-        this.terminalServiceForThisNautilusTerminal.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult("InjectSTDINForTerminalWithIDAndInjectedInput", keyThatWasPressed.getStringRepresentationOfKey());
+        this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommandWithInputParameter("InjectSTDINForTerminalWithIDAndInjectedInput", keyThatWasPressed.getStringRepresentationOfKey());
     }
     this.terminalDisplayNeedsToBeUpdated = true;
   }

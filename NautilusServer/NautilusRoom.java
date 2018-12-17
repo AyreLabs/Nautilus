@@ -13,7 +13,7 @@ public class NautilusRoom implements NautilusRoomObserver, NautilusKeyReceiver {
         public void run() {
           while(true) {
             try {
-              Thread.sleep(500);
+              Thread.sleep(200);
             } catch (Exception exception) {
               exception.printStackTrace();
             }
