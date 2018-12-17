@@ -24,7 +24,7 @@ public class NautilusRoomTerminal {
 
   private boolean terminalDisplayNeedsToBeUpdated = true;
   private long systemTimeThatTerminalDisplayWasLastUpdated = 0;
-  private final static long MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES = 1500;
+  private final static long MS_DELAY_BETWEEN_REGULAR_TERMINAL_DISPLAY_UPDATES = 3000;
 
   private NautilusTerminalService terminalServiceForThisNautilusTerminal;
 
@@ -66,7 +66,7 @@ public class NautilusRoomTerminal {
     } else if (keyThatWasPressed.isEscapeKey()) {
         this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectEscapeIntoSTDINForTerminalWithID");
     } else {
-        this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommandWithInputParameter("InjectSTDINForTerminalWithIDAndInjectedInput", keyThatWasPressed.getStringRepresentationOfKey());
+        this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommandWithInputParameter("InjectSTDINForTerminalWithIDAndInjectedInput", "\"" + keyThatWasPressed.getStringRepresentationOfKey() + "\"");
     }
     this.terminalDisplayNeedsToBeUpdated = true;
   }

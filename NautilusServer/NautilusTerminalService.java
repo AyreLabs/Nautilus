@@ -43,8 +43,8 @@ public class NautilusTerminalService {
 		return this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
 	}
 
-	public String runResponselessNautilusTerminalServiceCommand(String terminalServiceCommand) {
-		return this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
+	public void runResponselessNautilusTerminalServiceCommand(String terminalServiceCommand) {
+		this.runResponselessNautilusTerminalServiceCommandWithInputParameter(terminalServiceCommand, "");
 	}
 
 	public synchronized String runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(String terminalServiceCommand, String inputParameter) {
@@ -56,10 +56,13 @@ public class NautilusTerminalService {
             String seperator = "";
             while (true) {
                 String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
+                //System.out.printf("I: %s\n", nextInputLineReceived);
                 if (nextInputLineReceived.equals("END")) {
                     break;
                 } else {
-                    resultOfCommandReceivedFromService += seperator + this.inputStreamFromTerminalCommandService.readLine();
+                    String nextLineOfInput = this.inputStreamFromTerminalCommandService.readLine();
+                    //System.out.printf("L: %s\n", nextLineOfInput);
+                    resultOfCommandReceivedFromService += seperator + nextLineOfInput;
                     seperator = "\n";
                 }
             }
