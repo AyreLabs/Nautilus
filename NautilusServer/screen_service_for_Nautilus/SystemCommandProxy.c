@@ -7,7 +7,7 @@
 #include <string.h>
 #include<signal.h>
 
-#define PORT 6789
+#define BASE_PORT 6789
 
 
 //listen to port (attempt) and get socket id, -1 if error
@@ -208,8 +208,9 @@ void serveConsole(int socket) {
 	free(buf);
 }
 
-int main() {
-
+int main(int argc, char *argv[]) {
+    int PORT = atoi(argv[1]);
+    
 	printf("Starting System Command Proxy...\n");
 
 	int socket = newSocketToPort(PORT, 15);
