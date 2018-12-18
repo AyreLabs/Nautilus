@@ -1,22 +1,31 @@
-WINDOW_INFO:cursor=73,20|viewport=81,21
-_temp_screendump_Nautilus0
-_temp_screendump_Nautilus1
-_temp_screendump_Nautilus2
-_temp_screendump_Nautilus20
-test
-nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$ pwd
-/home/nautilus/Nautilus/NautilusServer/screen_service_for_Nautilus
-nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$ screen -
-r
-There is no screen to be resumed.
-nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$ ./screen
- -r
-There are several suitable screens on:
-        25693.NautilusCommandProxy1     (Detached)
-        31524.Nautilus0 (Detached)
-        25708.Nautilus2 (Detached)
-        25697.Nautilus1 (Detached)
-        25704.NautilusCommandProxy2     (Detached)
-        25680.NautilusCommandProxy0     (Detached)
-Type "screen [-d] -r [pid.]tty.host" to resume one of them.
+WINDOW_INFO:cursor=92,29|viewport=135,30
+  4
+  5 dsdf 23erthqweqw
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$ :q
+:q: command not found
 nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$
+nautilus@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus$ dsdweweasdasdasdasd
