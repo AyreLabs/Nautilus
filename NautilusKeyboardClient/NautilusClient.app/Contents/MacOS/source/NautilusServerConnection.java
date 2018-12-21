@@ -5,7 +5,7 @@
 
     DESCRIPTION
     -----------
-    ....
+    Websocket server connection to Nautilus Application Server
 
     AUTHOR
     ------

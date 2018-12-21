@@ -5,7 +5,7 @@
 
     DESCRIPTION
     -----------
-    ....
+    Key listener interface for Nautilus Keyboard Client
 
     AUTHOR
     ------

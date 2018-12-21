@@ -5,7 +5,7 @@
     
     DESCRIPTION
     -----------
-    ...
+    Protocol to encapsulate key presses between client and server
     
     AUTHOR
     ------

@@ -5,7 +5,7 @@
 
     DESCRIPTION
     -----------
-    ....
+    Websocket implementation for Nautilus Keyboard Application
 
     AUTHOR
     ------

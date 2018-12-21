@@ -5,7 +5,7 @@
 
     DESCRIPTION
     -----------
-    ...
+    Client application display GUI 
 
     AUTHOR
     ------

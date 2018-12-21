@@ -5,7 +5,7 @@
 
     DESCRIPTION
     -----------
-    ...
+    Main application file for Nautilus Keyboard Client
 
     AUTHOR
     ------
