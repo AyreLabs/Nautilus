@@ -1,5 +1,55 @@
 #!/bin/sh
 
-javac -cp ./Java-WebSocket-1.3.9.jar/ *.java
-#java -cp ./Java-WebSocket-1.3.9.jar/:. NautilusServer 8887 3000 terminal_inisitalization_string~-7~0.75~-5.5~0~0~0~15 terminal_inisitalization_string~-2.5~0.75~9~0~115~0~15 terminal_inisitalization_string~-2.5~0.75~9~0~115~0~15
-java -cp ./Java-WebSocket-1.3.9.jar/:. NautilusServer 8887 3000 terminal_inisitalization_string~-4.5~0.75~-5.5~0~0~0~15 terminal_inisitalization_string~-2.5~0.75~7.5~0~115~0~15 terminal_inisitalization_string~6.5~0.75~-2.5~0~250~0~15
+#------------------------------------------------------------------------------------------
+#
+# PURPOSE
+# -------
+# Compile java code for the Nautilus Server and run the Server Application
+#
+# AUTHOR
+# ------
+# Ayre Labs (2018)
+#
+#------------------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------------
+# DEFINITIONS
+#------------------------------------------------------------------------------------------
+readonly JAVA_WEBSOCKET_LIBRARY=./Java-WebSocket-1.3.9.jar/
+readonly CLIENT_KEYBOARD_SOCKET="8887"
+readonly CLIENT_VR_SOCKET="3000"
+readonly TERMINAL_ONE_INITIALIZATION_STRING="terminal_inisitalization_string~-4.5~0.75~-5.5~0~0~0~15"
+readonly TERMINAL_TWO_INITIALIZATION_STRING="terminal_inisitalization_string~-2.5~0.75~7.5~0~115~0~15"
+readonly TERMINAL_THREE_INITIALIZATION_STRING="terminal_inisitalization_string~6.5~0.75~-2.5~0~250~0~15"
+
+#------------------------------------------------------------------------------------------
+# MAIN
+#------------------------------------------------------------------------------------------
+main()
+{
+    echo "\nCompiling..."
+    compileNautilusServer
+    echo "Done.\n"
+    
+    echo "\nRunning..."
+    runNautilusServer
+    echo "Done.\n"
+}
+
+#------------------------------------------------------------------------------------------
+# INTERNAL FUNCTIONS
+#------------------------------------------------------------------------------------------
+function compileNautilusServer()
+{
+	javac -cp $JAVA_WEBSOCKET_LIBRARY *.java
+}
+
+function runNautilusServer()
+{
+	java -cp $JAVA_WEBSOCKET_LIBRARY:. NautilusServer $CLIENT_KEYBOARD_SOCKET $CLIENT_VR_SOCKET $TERMINAL_ONE_INITIALIZATION_STRING $TERMINAL_TWO_INITIALIZATION_STRING $TERMINAL_THREE_INITIALIZATION_STRING
+}
+
+#------------------------------------------------------------------------------------------
+# SCRIPT
+#------------------------------------------------------------------------------------------
+    main
