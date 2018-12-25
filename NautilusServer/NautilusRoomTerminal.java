@@ -57,7 +57,7 @@ public class NautilusRoomTerminal {
         this.systemTimeThatTerminalDisplayWasLastUpdated = 0;
     }
 
-    private void setupRoomDimensionsFromTerminalConfigurationString() {
+    private void setupRoomDimensionsFromTerminalConfigurationString(String terminalConfigurationString) {
         String[] terminalConfigurationStringComponents = terminalConfigurationString.split("~");
         boolean terminalConfigurationStringIsValid = terminalConfigurationStringComponents.length >= 7;
         if (terminalConfigurationStringIsValid) {
