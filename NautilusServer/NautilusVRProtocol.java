@@ -1,5 +1,20 @@
+//----------------------------------------------------------------------------------------
+//    PROJECT
+//    -------
+//    Project Nautilus
+//
+//    AUTHOR
+//    ------
+//    Ayre Labs (2018)
+//----------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------
+// IMPORTS
+//----------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------
+// CLASS DEFINITION
+//----------------------------------------------------------------------------------------
 public class NautilusVRProtocol {
 
   public static String nautilusRoomTerminalPositionStateUpdateMessageWithTerminalIDPositionXYZAndRotationXYZAndSpatialTerminalWidth(int terminalID, double positionX, double positionY, double positionZ, double rotationX, double rotationY, double rotationZ, double spatialTerminalWidth) {
@@ -9,5 +24,4 @@ public class NautilusVRProtocol {
   public static String nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(int terminalID, String displayString) {
       return String.format("Z%d:%s", terminalID, displayString);
   }
-
 }

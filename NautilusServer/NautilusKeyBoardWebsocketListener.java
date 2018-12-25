@@ -15,7 +15,11 @@
 //----------------------------------------------------------------------------------------
 // INTERFACE DEFINITION
 //----------------------------------------------------------------------------------------
-public interface NautilusKeyReceiver {
+public interface NautilusKeyBoardWebsocketListener {
+	
+	public void receiveWebSocketOpenEvent(WebSocket keyboardClientWebSocketConnection);
   
-    public void receiveNautilusKeyPressForNautilusRoomNumber(NautilusKey keyThatWasPressed, int nautilusRoomNumber);
-}
+    public void receiveWebSocketCloseEvent(WebSocket keyboardClientWebSocketConnection);
+
+    public void receiveWebSocketMessageEvent(WebSocket keyboardClientWebSocketConnection, String message);
+} 

@@ -13,9 +13,19 @@
 //----------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------
-// INTERFACE DEFINITION
+// CLASS DEFINITION
 //----------------------------------------------------------------------------------------
-public interface NautilusKeyReceiver {
-  
-    public void receiveNautilusKeyPressForNautilusRoomNumber(NautilusKey keyThatWasPressed, int nautilusRoomNumber);
+private class NautilusKeyboardClient {
+        
+    private int currentlySelectedNautilusRoomNumber = 0;
+        
+    public NautilusKeyboardClient() { /* Nothing */ }
+        
+    public void setCurrentlySelectedNautilusRoomNumber(int currentlySelectedNautilusRoomNumber) {
+        this.currentlySelectedNautilusRoomNumber = currentlySelectedNautilusRoomNumber;
+    }
+    
+    public int getCurrentlySelectedNautilusRoomNumber() {
+        return this.currentlySelectedNautilusRoomNumber;
+    }
 }

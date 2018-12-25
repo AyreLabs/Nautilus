@@ -1,3 +1,21 @@
+//----------------------------------------------------------------------------------------
+//    PROJECT
+//    -------
+//    Project Nautilus
+//
+//    AUTHOR
+//    ------
+//    Ayre Labs (2018)
+//----------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------
+// IMPORTS
+//----------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------
+// INTERFACE DEFINITION
+//----------------------------------------------------------------------------------------
 public interface NautilusRoomUpdateListener {
-  public void receivedNotificationThatANautilusRoomTerminalWasUpdated(NautilusRoomTerminal terminalThatWasUpdated);
+    
+    public void receivedNotificationThatANautilusRoomTerminalWasUpdated(NautilusRoomTerminal terminalThatWasUpdated);
 }
