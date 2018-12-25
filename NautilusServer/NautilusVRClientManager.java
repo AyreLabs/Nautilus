@@ -27,23 +27,10 @@ import org.java_websocket.server.WebSocketServer;
 //----------------------------------------------------------------------------------------
 // CLASS DEFINITION
 //----------------------------------------------------------------------------------------
-public class NautilusVRClientManager extends WebSocketServer implements NautilusRoomUpdateListener {
+public class NautilusVRClientManage implements NautilusRoomUpdateListener, NautilusVRWebsocketListener {
     
-    private NautilusWebSocketClientPool<NautilusVRClient> poolOfConnectedVRClients = new NautilusWebSocketClientPool<NautilusVRClient>();
-    private NautilusRoomObserver nautilusRoomObserver;
-
-    private class NautilusVRClient {
-    
-    private final WebSocket webSocketConnectionToVRClient;
-    
-        public NautilusVRClient(WebSocket webSocketConnectionToVRClient) {
-            this.webSocketConnectionToVRClient = webSocketConnectionToVRClient;
-        }
-    
-        public void sendStringMessageToClient(String stringMessage) {
-            this.webSocketConnectionToVRClient.send(stringMessage);
-        }
-    }
+    private NautilusWebSocketClientPool<NautilusVRClient> poolOfConnectedVRClients;
+    private NautilusVRWebsocketServer nautilusVRWebsocketServer;
 
     public static NautilusVRClientManager createNautilusVRClientManagerAndStartListeningForClientsOnPortWithNautilusRoomObserver(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
         NautilusVRClientManager newNautilusVRClientManager = new NautilusVRClientManager(vrPortNumber, nautilusRoomObserver);
@@ -52,13 +39,12 @@ public class NautilusVRClientManager extends WebSocketServer implements Nautilus
     }
 
     private NautilusVRClientManager(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
-        super(new InetSocketAddress(vrPortNumber));
         this.nautilusRoomObserver = nautilusRoomObserver;
+        this.poolOfConnectedVRClients = new NautilusWebSocketClientPool<NautilusVRClient>();
+        this.nautilusVRWebsocketServer = NautilusVRWebsocketServer.createNautilusVRClientManagerAndStartListeningForClientsOnPortWithNautilusVRWebsocketListener(vrPortNumber, this);
     }
 
-    @Override
-    public void onOpen(WebSocket vrClientWebSocketConnection, ClientHandshake handshake) {
-        System.out.println(vrClientWebSocketConnection.getRemoteSocketAddress().getAddress().getHostAddress() + " connected as a VR client");
+    public void receiveOnOpenEvent(WebSocket vrClientWebSocketConnection) {
         NautilusVRClient newNautilusVRClient = new NautilusVRClient(vrClientWebSocketConnection);
         this.poolOfConnectedVRClients.addClientToPoolWithWebSocketConnection(newNautilusVRClient, vrClientWebSocketConnection);
         for (NautilusRoomTerminal nautilusRoomTerminal : this.nautilusRoomObserver.getCurrentNautilusRoomTerminals()) {
@@ -67,32 +53,8 @@ public class NautilusVRClientManager extends WebSocketServer implements Nautilus
         }
     }
 
-    @Override
-    public void onClose(WebSocket vrClientWebSocketConnection, int code, String reason, boolean remote) {
-        System.out.println(vrClientWebSocketConnection.getRemoteSocketAddress().getAddress().getHostAddress() + " disconnected from being a VR client");
+    public void receiveOnCloseEvent(WebSocket vrClientWebSocketConnection) {
         this.poolOfConnectedVRClients.removeClientFromPoolForWebSocketConnection(vrClientWebSocketConnection);
-    }
-
-    @Override
-    public void onMessage(WebSocket vrClientWebSocketConnection, String message) {
-        System.out.println("Got a trashy string message from VR client should not see this");
-    }
-
-    @Override
-    public void onMessage(WebSocket vrClientWebSocketConnection, ByteBuffer message) {
-        System.out.println("Got a trashy byte message from VR client should not see this");
-    }
-
-    @Override
-    public void onError(WebSocket vrClientWebSocketConnection, Exception exception) {
-        exception.printStackTrace();
-    }
-
-    @Override
-    public void onStart() {
-        System.out.println("Started listening for VR client connections");
-        //setConnectionLostTimeout(0);
-        //setConnectionLostTimeout(100);
     }
 
     @Override
