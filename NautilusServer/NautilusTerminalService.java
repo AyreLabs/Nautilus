@@ -1,3 +1,16 @@
+//----------------------------------------------------------------------------------------
+//    PROJECT
+//    -------
+//    Project Nautilus
+//
+//    AUTHOR
+//    ------
+//    Ayre Labs (2018)
+//----------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------
+// IMPORTS
+//----------------------------------------------------------------------------------------
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,34 +23,40 @@ import java.io.Reader;
 import java.io.*;
 import java.net.*;
 
-
+//----------------------------------------------------------------------------------------
+// CLASS DEFINITION
+//----------------------------------------------------------------------------------------
 public class NautilusTerminalService {
-	private final int terminalID;
-	private static final int BASE_PORT = 6789;
-	private static final String LOCALHOST = "127.0.0.1";
-	private Socket socketConnectionToTerminalCommandService = null;
-	private DataOutputStream outputStreamToTerminalCommandService = null;
-	private BufferedReader inputStreamFromTerminalCommandService = null;
+	
+    private static final int BASE_PORT = 6789;
+    private static final String LOCALHOST = "127.0.0.1";
+
+    private final int terminalID;
+	private Socket socketConnectionToTerminalCommandService;
+	private DataOutputStream outputStreamToTerminalCommandService;
+	private BufferedReader inputStreamFromTerminalCommandService;
+    private String resultOfCommandReceivedFromService;
 
 	public static NautilusTerminalService startTerminalServiceForTerminalWithID(int terminalID) {
 		return new NautilusTerminalService(terminalID);
 	}
 
 	private NautilusTerminalService(int terminalID) {
-		this.terminalID = terminalID;
-
+        this.terminalID = terminalID;
 		try {
-
-			int portNumberToConnectToServiceOn = BASE_PORT + terminalID;
-      		this.socketConnectionToTerminalCommandService = new Socket(LOCALHOST, portNumberToConnectToServiceOn);
-      		this.outputStreamToTerminalCommandService = new DataOutputStream(this.socketConnectionToTerminalCommandService.getOutputStream());
-        	this.inputStreamFromTerminalCommandService = new BufferedReader(new InputStreamReader(this.socketConnectionToTerminalCommandService.getInputStream()));
-
+            this.initializeParameters();
         } catch(Exception exception) {
         	exception.printStackTrace();
         }
 	}
 
+    private void initializeParameters() {
+        int portNumberToConnectToServiceOn = BASE_PORT + this.terminalID;
+        this.resultOfCommandReceivedFromService = "";
+        this.socketConnectionToTerminalCommandService = new Socket(LOCALHOST, portNumberToConnectToServiceOn);
+        this.outputStreamToTerminalCommandService = new DataOutputStream(this.socketConnectionToTerminalCommandService.getOutputStream());
+        this.inputStreamFromTerminalCommandService = new BufferedReader(new InputStreamReader(this.socketConnectionToTerminalCommandService.getInputStream()));
+    }
 
 	public String runNautilusTerminalServiceCommandAndReturningResult(String terminalServiceCommand) {
 		return this.runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(terminalServiceCommand, "");
@@ -48,43 +67,51 @@ public class NautilusTerminalService {
 	}
 
 	public synchronized String runNautilusTerminalServiceCommandWithInputParameterAndReturningResult(String terminalServiceCommand, String inputParameter) {
-        String resultOfCommandReceivedFromService = "";
+        this.resultOfCommandReceivedFromService = "";
 		try {
-            String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
-            this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
-
-            String seperator = "";
-            while (true) {
-                String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
-                //System.out.printf("I: %s\n", nextInputLineReceived);
-                if (nextInputLineReceived.equals("END")) {
-                    break;
-                } else {
-                    String nextLineOfInput = this.inputStreamFromTerminalCommandService.readLine();
-                    //System.out.printf("L: %s\n", nextLineOfInput);
-                    resultOfCommandReceivedFromService += seperator + nextLineOfInput;
-                    seperator = "\n";
-                }
-            }
+            this.sendCommandToTerminalService(terminalServiceCommand, inputParameter);
+            this.getResultantOutputFromRunningCommand();
         } catch(Exception exception) {
             exception.printStackTrace();
         }
-        return resultOfCommandReceivedFromService;
+        return this.resultOfCommandReceivedFromService;
 	}
+
+    private void getResultantOutputFromRunningCommand() {
+        String seperator = "";
+        boolean notFinishedAddingResultLines = true;
+        while (notFinishedAddingResultLines) {
+            notFinishedAddingResultLines = attemptToAddResultLine();
+        }
+        return resultOfCommandReceivedFromService;
+    }
+
+    private boolean attemptToAddResultLine() {
+        String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
+        boolean notFinishedAddingResultLines = true;
+        //System.out.printf("I: %s\n", nextInputLineReceived);
+        if (nextInputLineReceived.equals("END")) {
+            notFinishedAddingResultLines = false;
+        } else {
+            String nextLineOfInput = this.inputStreamFromTerminalCommandService.readLine();
+            //System.out.printf("L: %s\n", nextLineOfInput);
+            this.resultOfCommandReceivedFromService += seperator + nextLineOfInput;
+            seperator = "\n";
+        }
+        return notFinishedAddingResultLines;
+    }
+
+    private void sendCommandToTerminalService(String terminalServiceCommand, String inputParameter) {
+        String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
+        this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
+    }
 
 	public void runResponselessNautilusTerminalServiceCommandWithInputParameter(String terminalServiceCommand, String inputParameter) {
 		try {
             String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
             this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
-
         } catch(Exception exception) {
             exception.printStackTrace();
         }
 	}
-
-	//clientSocket.close();
-
-
 }
-
-
