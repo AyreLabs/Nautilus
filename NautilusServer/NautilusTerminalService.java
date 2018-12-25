@@ -50,7 +50,7 @@ public class NautilusTerminalService {
         }
 	}
 
-    private void initializeParameters() {
+    private void initializeParameters() throws Exception {
         int portNumberToConnectToServiceOn = BASE_PORT + this.terminalID;
         this.resultOfCommandReceivedFromService = "";
         this.socketConnectionToTerminalCommandService = new Socket(LOCALHOST, portNumberToConnectToServiceOn);
