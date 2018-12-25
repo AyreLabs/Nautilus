@@ -30,7 +30,7 @@ public class NautilusServer {
         }
     }
 
-    private static attemptToStartServer(String[] commandLineArguments) throws Exception {
+    private static void attemptToStartServer(String[] commandLineArguments) throws Exception {
         boolean commandLineArgumentsProvidedAreValid = commandLineArguments.length > 1;
         if (commandLineArgumentsProvidedAreValid) {
             NautilusServer.startServerForCommandLineArguements(commandLineArguments);
@@ -77,7 +77,7 @@ public class NautilusServer {
         }
     }
 
-    private void createNautilusRoomForConfigrautionStringAndID() {
+    private void createNautilusRoomForConfigrautionStringAndID(String nautilusTerminalConfigurationString, int currentTerminalID) {
         NautilusRoomTerminal newNautilusTerminal = NautilusRoomTerminal.newNautilusTerminalFromConfigurationStringAndTerminalID(nautilusTerminalConfigurationString, currentTerminalID);
         this.nautilusRoom.addTerminalToRoom(newNautilusTerminal);
     }
