@@ -35,7 +35,6 @@ public class NautilusKeyboardClientManager implements NautilusKeyBoardWebsocketL
 
     public static NautilusKeyboardClientManager createNautilusKeyboardClientManagerAndStartListeningForClientsOnPortWithNautilusKeyReceiver(int keyboardControlPortNumber, NautilusKeyReceiver nautilusKeyReceiver) {
         NautilusKeyboardClientManager newNautilusKeyboardClientManager = new NautilusKeyboardClientManager(keyboardControlPortNumber, nautilusKeyReceiver);
-        newNautilusKeyboardClientManager.start();
         return newNautilusKeyboardClientManager;
     }
 

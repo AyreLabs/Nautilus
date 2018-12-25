@@ -15,7 +15,7 @@
 //----------------------------------------------------------------------------------------
 // CLASS DEFINITION
 //----------------------------------------------------------------------------------------
-private class NautilusKeyboardClient {
+public class NautilusKeyboardClient {
         
     private int currentlySelectedNautilusRoomNumber = 0;
         
