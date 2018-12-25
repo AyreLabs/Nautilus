@@ -47,7 +47,7 @@ public class NautilusRoomTerminal {
     private void setupRoomStaticFeatures(String terminalConfigurationString, int terminalID) {
         this.currentTerminalWindowDisplayString = "";
         this.terminalID = terminalID;
-        this.roomDimensions = NautilusRoomTerminalDimensions();
+        this.roomDimensions = new NautilusRoomTerminalDimensions();
         this.setupRoomDimensionsFromTerminalConfigurationString(terminalConfigurationString);        
     }
 
