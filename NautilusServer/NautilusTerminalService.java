@@ -78,12 +78,10 @@ public class NautilusTerminalService {
 	}
 
     private void getResultantOutputFromRunningCommand() {
-        String seperator = "";
         boolean notFinishedAddingResultLines = true;
         while (notFinishedAddingResultLines) {
             notFinishedAddingResultLines = attemptToAddResultLine();
         }
-        return resultOfCommandReceivedFromService;
     }
 
     private boolean attemptToAddResultLine() {
@@ -95,8 +93,7 @@ public class NautilusTerminalService {
         } else {
             String nextLineOfInput = this.inputStreamFromTerminalCommandService.readLine();
             //System.out.printf("L: %s\n", nextLineOfInput);
-            this.resultOfCommandReceivedFromService += seperator + nextLineOfInput;
-            seperator = "\n";
+            this.resultOfCommandReceivedFromService += "\n" + nextLineOfInput;
         }
         return notFinishedAddingResultLines;
     }
