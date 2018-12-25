@@ -77,14 +77,14 @@ public class NautilusTerminalService {
         return this.resultOfCommandReceivedFromService;
 	}
 
-    private void getResultantOutputFromRunningCommand() {
+    private void getResultantOutputFromRunningCommand() throws Exception {
         boolean notFinishedAddingResultLines = true;
         while (notFinishedAddingResultLines) {
             notFinishedAddingResultLines = attemptToAddResultLine();
         }
     }
 
-    private boolean attemptToAddResultLine() {
+    private boolean attemptToAddResultLine() throws Exception {
         String nextInputLineReceived = this.inputStreamFromTerminalCommandService.readLine();
         boolean notFinishedAddingResultLines = true;
         //System.out.printf("I: %s\n", nextInputLineReceived);
@@ -98,7 +98,7 @@ public class NautilusTerminalService {
         return notFinishedAddingResultLines;
     }
 
-    private void sendCommandToTerminalService(String terminalServiceCommand, String inputParameter) {
+    private void sendCommandToTerminalService(String terminalServiceCommand, String inputParameter) throws Exception {
         String commandToSendToTerminalCommandService = String.format("./SSfN_%s.sh %d %s", terminalServiceCommand, terminalID, inputParameter);
         this.outputStreamToTerminalCommandService.writeBytes(commandToSendToTerminalCommandService + "\n");
     }
