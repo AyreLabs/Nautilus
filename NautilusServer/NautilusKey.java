@@ -1,67 +1,78 @@
-/*----------------------------------------------------------------------------------------
-    PROJECT
-    -------
-    Project Nautilus
+//----------------------------------------------------------------------------------------
+//    PROJECT
+//    -------
+//    Project Nautilus
+//
+//    AUTHOR
+//    ------
+//    Ayre Labs (2018)
+//----------------------------------------------------------------------------------------
 
-    DESCRIPTION
-    -----------
-    ....
+//----------------------------------------------------------------------------------------
+// IMPORTS
+//----------------------------------------------------------------------------------------
 
-    AUTHOR
-    ------
-    Ayre Labs (2018)
-----------------------------------------------------------------------------------------*/
-
+//----------------------------------------------------------------------------------------
+// CLASS DEFINITION
+//----------------------------------------------------------------------------------------
 public class NautilusKey {
-  private int nautilusKeyCode = 0;
-  private static final int nautilusRoomKeyCodeBase = 1112;
-  private static final int nautilusRoomKeyCodeUpperBound = 1123;
 
-  public static NautilusKey nautilusKeyWithNautilusKeyStringDescription(String nautilusKeyStringDescription) {
-    return new NautilusKey(nautilusKeyStringDescription);
-  }
+    private static final int NAUTILUS_KEY_CODE_ENCODING_BASE = 1112;
+    private static final int NAUTILUS_KEY_CODE_ENCODING_UPPER_BOUND = 1123;
+    private static final int FUNCTION_KEY_ENCODING_BASE = 1000;
+    private static final int NAUTILUS_KEY_CODE_ENTER_KEY = 10;
+    private static final int NAUTILUS_KEY_CODE_BACKSPACE_KEY = 8;
+    private static final int NAUTILUS_KEY_CODE_ESCAPE_KEY = 1027;
+    private static final int NAUTILUS_KEY_CODE_LEFT_ARROW_KEY = 1037;
+    private static final int NAUTILUS_KEY_CODE_RIGHT_ARROW_KEY = 1039;
 
-  private NautilusKey(String nautilusKeyStringDescription) {
-    try {
-      this.nautilusKeyCode = Integer.parseInt(nautilusKeyStringDescription);
-    } catch(Exception exception) {
-      exception.printStackTrace();
+    private int nautilusKeyCode;
+
+    public static NautilusKey nautilusKeyWithNautilusKeyStringDescription(String nautilusKeyStringDescription) {
+        return new NautilusKey(nautilusKeyStringDescription);
     }
-  }
 
-  public boolean isANautilusRoomNumberKey() {
-    return this.nautilusKeyCode >= nautilusRoomKeyCodeBase && this.nautilusKeyCode <= nautilusRoomKeyCodeUpperBound;
-  }
-
-  public int getSelectedNautilusRoomNumber() {
-    return this.nautilusKeyCode - nautilusRoomKeyCodeBase;
-  }
-
-  public String getStringRepresentationOfKey() {
-    if (this.nautilusKeyCode >= 1000) {
-      return "?";
+    private NautilusKey(String nautilusKeyStringDescription) {
+        try {
+            this.nautilusKeyCode = Integer.parseInt(nautilusKeyStringDescription);
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
     }
-    return String.valueOf((char)this.nautilusKeyCode);
-  }
 
-  public boolean isEnterKey() {
-    return this.nautilusKeyCode == 10;
-  }
+    public boolean isANautilusRoomNumberKey() {
+        return this.nautilusKeyCode >= NAUTILUS_KEY_CODE_ENCODING_BASE 
+            && this.nautilusKeyCode <= NAUTILUS_KEY_CODE_ENCODING_UPPER_BOUND;
+    }
 
-  public boolean isBackspaceKey() {
-    return this.nautilusKeyCode == 8;
-  }
+    public int getSelectedNautilusRoomNumber() {
+        return this.nautilusKeyCode - NAUTILUS_KEY_CODE_ENCODING_BASE;
+    }
 
-  public boolean isEscapeKey() {
-    return this.nautilusKeyCode == 1027;
-  }
+    public String getStringRepresentationOfKey() {
+        if (this.nautilusKeyCode >= FUNCTION_KEY_ENCODING_BASE) {
+            return "?";
+        }
+        return String.valueOf((char)this.nautilusKeyCode);
+    }
 
-  public boolean isLeftArrowKey() {
-    return this.nautilusKeyCode == 1037;
-  }
+    public boolean isEnterKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_ENTER_KEY;
+    }
 
-  public boolean isRightArrowKey() {
-    return this.nautilusKeyCode == 1039;
-  }
+    public boolean isBackspaceKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_BACKSPACE_KEY;
+    }
 
+    public boolean isEscapeKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_ESCAPE_KEY;
+    }
+
+    public boolean isLeftArrowKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_LEFT_ARROW_KEY;
+    }
+
+    public boolean isRightArrowKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_RIGHT_ARROW_KEY;
+    }
 }

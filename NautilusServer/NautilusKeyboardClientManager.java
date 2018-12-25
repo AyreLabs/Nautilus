@@ -79,6 +79,4 @@ public class NautilusKeyboardClientManager extends WebSocketServer {
     //setConnectionLostTimeout(0);
     //setConnectionLostTimeout(100);
   }
-
-
 }

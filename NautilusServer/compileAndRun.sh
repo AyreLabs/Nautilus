@@ -27,13 +27,13 @@ readonly TERMINAL_THREE_INITIALIZATION_STRING="terminal_inisitalization_string~6
 #------------------------------------------------------------------------------------------
 main()
 {
-    echo "\nCompiling..."
+    echo "Compiling..."
     compileNautilusServer
-    echo "Done.\n"
+    echo "Done."
     
-    echo "\nRunning..."
+    echo "Running..."
     runNautilusServer
-    echo "Done.\n"
+    echo "Done."
 }
 
 #------------------------------------------------------------------------------------------
