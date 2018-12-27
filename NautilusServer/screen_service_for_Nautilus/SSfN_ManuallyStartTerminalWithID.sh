@@ -1,4 +1,4 @@
 #!/bin/sh
 
-./screen -S "Nautilus$1"
+./screen -S "Nautilus$1" -d -m
 
