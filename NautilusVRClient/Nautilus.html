@@ -444,14 +444,22 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
     
     <body>
         <script>
-               
+
+	window.onload = function () {
+	    var skyBackgroundURL = "http://"+location.hostname+"/background.jpg";
+            var mainSceneToInsertNewTerminal = document.querySelector('a-scene');
+            var newTerminalHTMLObject = document.createElement('a-sky');
+            newTerminalHTMLObject.setAttribute('src', skyBackgroundURL);
+            newTerminalHTMLObject.setAttribute('rotation', '0 -130 0');
+            mainSceneToInsertNewTerminal.appendChild(newTerminalHTMLObject);
+        }
+
         //------------------------------------------------------------------------------------------
         // Web Socket   
         //------------------------------------------------------------------------------------------
-        var ws = new WebSocket('ws://45.77.234.39:3000');
+        var ws = new WebSocket('ws://'+location.hostname+':3000');
         
         ws.onopen = function(){
-            console.log('Connected to 127.0.0.1:3000!');
         }
         
         ws.addEventListener("message", function(event) {
@@ -527,13 +535,10 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
         <a-scene id="main_scene">
             
             <!-- Image Caching -->
-            <a-assets>
-                <img id="backgroundImage" crossorigin="anonymous" src="http://45.77.234.39/background.jpg">
-                <video id="video360" crossorigin="anonymous" src="https://gcs-vimeo.akamaized.net/exp=1544864934~acl=%2A%2F746369181.mp4%2A~hmac=8e654c3c40b44a34d8b4ea012afea1a8d66531f65fe6549ec9fd2114c007df6c/vimeo-prod-skyfire-std-us/01/3196/8/215984159/746369181.mp4?download=1&filename=360%2FVR+Master+Series+%7C+Free+Download+%7C+Crystal+Shower+Falls.mp4">
+            <a-assets id="aframe_assets">
             </a-assets>
             
             <!-- Background 360 Image -->
-            <a-sky src="#backgroundImage" rotation="0 -130 0"></a-sky>
             <!--<a-videosphere src="#video360"></a-videosphere>-->
         </a-scene>
     </body>
