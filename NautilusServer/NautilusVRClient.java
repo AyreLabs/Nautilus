@@ -20,7 +20,7 @@ import org.java_websocket.server.WebSocketServer;
 //----------------------------------------------------------------------------------------
 // CLASS DEFINITION
 //----------------------------------------------------------------------------------------
-private class NautilusVRClient {
+public class NautilusVRClient {
 
 	public final WebSocket webSocketConnectionToVRClient;
     

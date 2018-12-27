@@ -27,14 +27,14 @@ import org.java_websocket.server.WebSocketServer;
 //----------------------------------------------------------------------------------------
 // CLASS DEFINITION
 //----------------------------------------------------------------------------------------
-public class NautilusVRClientManage implements NautilusRoomUpdateListener, NautilusVRWebsocketListener {
+public class NautilusVRClientManager implements NautilusRoomUpdateListener, NautilusVRWebsocketListener {
     
     private NautilusWebSocketClientPool<NautilusVRClient> poolOfConnectedVRClients;
     private NautilusVRWebsocketServer nautilusVRWebsocketServer;
+    private NautilusRoomObserver nautilusRoomObserver;
 
     public static NautilusVRClientManager createNautilusVRClientManagerAndStartListeningForClientsOnPortWithNautilusRoomObserver(int vrPortNumber, NautilusRoomObserver nautilusRoomObserver) {
         NautilusVRClientManager newNautilusVRClientManager = new NautilusVRClientManager(vrPortNumber, nautilusRoomObserver);
-        newNautilusVRClientManager.start();
         return newNautilusVRClientManager;
     }
 
