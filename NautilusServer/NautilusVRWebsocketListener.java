@@ -22,7 +22,7 @@ import org.java_websocket.server.WebSocketServer;
 //----------------------------------------------------------------------------------------
 public interface NautilusVRWebsocketListener {
 	
-	public void receiveOnOpenEvent(WebSocket keyboardClientWebSocketConnection);
-  
+    public void receiveOnOpenEvent(WebSocket keyboardClientWebSocketConnection);
+
     public void receiveOnCloseEvent(WebSocket keyboardClientWebSocketConnection);
-} 
+}

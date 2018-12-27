@@ -53,6 +53,7 @@ public class NautilusKeyboardClientManager implements NautilusKeyBoardWebsocketL
     }
 
     public void receiveWebSocketMessageEvent(WebSocket keyboardClientWebSocketConnection, String message) {
+        System.out.printf("BB: %s\n", message);
         for (String nautilusKeyStringDescription : NautilusKeyboardProtocol.nautilusKeyStringDescriptionsFromKeyboardClientMessage(message)) {
             this.processNautilusKeyStringDescription(nautilusKeyStringDescription,keyboardClientWebSocketConnection);
         }

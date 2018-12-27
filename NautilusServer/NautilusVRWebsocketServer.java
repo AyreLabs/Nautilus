@@ -37,7 +37,7 @@ public class NautilusVRWebsocketServer extends WebSocketServer {
         return newNautilusVRWebsocketServer;
     }
 
-    private NautilusVRClientManager(int vrPortNumber, NautilusVRWebsocketListener nautilusVRWebsocketListener) {
+    private NautilusVRWebsocketServer(int vrPortNumber, NautilusVRWebsocketListener nautilusVRWebsocketListener) {
         super(new InetSocketAddress(vrPortNumber));
         this.nautilusVRWebsocketListener = nautilusVRWebsocketListener;
     }
@@ -45,13 +45,13 @@ public class NautilusVRWebsocketServer extends WebSocketServer {
     @Override
     public void onOpen(WebSocket vrClientWebSocketConnection, ClientHandshake handshake) {
         System.out.println(vrClientWebSocketConnection.getRemoteSocketAddress().getAddress().getHostAddress() + " connected as a VR client");
-        this.nautilusVRWebsocketListener.recieveOnOpenEvent(vrClientWebSocketConnection);
+        this.nautilusVRWebsocketListener.receiveOnOpenEvent(vrClientWebSocketConnection);
     }
 
     @Override
     public void onClose(WebSocket vrClientWebSocketConnection, int code, String reason, boolean remote) {
         System.out.println(vrClientWebSocketConnection.getRemoteSocketAddress().getAddress().getHostAddress() + " disconnected from being a VR client");
-        this.nautilusVRWebsocketListener.recieveOnCloseEvent(vrClientWebSocketConnection);
+        this.nautilusVRWebsocketListener.receiveOnCloseEvent(vrClientWebSocketConnection);
     }
 
     @Override
