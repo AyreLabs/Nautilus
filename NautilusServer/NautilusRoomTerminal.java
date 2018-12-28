@@ -100,6 +100,14 @@ public class NautilusRoomTerminal {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectBackspaceIntoSTDINForTerminalWithID");
         } else if (keyThatWasPressed.isEnterKey()) {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectReturnIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isUpArrowKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectUpKeyIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isRightArrowKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectRightKeyIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isLeftArrowKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectLeftKeyIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isDownArrowKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectDownKeyIntoSTDINForTerminalWithID");
         } else if (keyThatWasPressed.isEscapeKey()) {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectEscapeIntoSTDINForTerminalWithID");
         } else if (keyThatWasPressed.isDoubleQuoteKey()) {

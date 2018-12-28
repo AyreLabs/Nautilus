@@ -27,6 +27,8 @@ public class NautilusKey {
     private static final int NAUTILUS_KEY_CODE_ESCAPE_KEY = 1027;
     private static final int NAUTILUS_KEY_CODE_LEFT_ARROW_KEY = 1037;
     private static final int NAUTILUS_KEY_CODE_RIGHT_ARROW_KEY = 1039;
+    private static final int NAUTILUS_KEY_CODE_UP_ARROW_KEY = 1038;
+    private static final int NAUTILUS_KEY_CODE_DOWN_ARROW_KEY = 1040;
 
     private int nautilusKeyCode;
 
@@ -80,6 +82,14 @@ public class NautilusKey {
 
     public boolean isLeftArrowKey() {
         return this.nautilusKeyCode == NAUTILUS_KEY_CODE_LEFT_ARROW_KEY;
+    }
+
+    public boolean isUpArrowKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_UP_ARROW_KEY;
+    }
+
+    public boolean isDownArrowKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_DOWN_ARROW_KEY;
     }
 
     public boolean isRightArrowKey() {
