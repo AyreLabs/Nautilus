@@ -18,9 +18,9 @@
 readonly JAVA_WEBSOCKET_LIBRARY=./Java-WebSocket-1.3.9.jar/
 readonly CLIENT_KEYBOARD_SOCKET="8887"
 readonly CLIENT_VR_SOCKET="3000"
-readonly TERMINAL_ONE_INITIALIZATION_STRING="terminal_inisitalization_string~-4.5~0.75~-5.5~0~0~0~15"
-readonly TERMINAL_TWO_INITIALIZATION_STRING="terminal_inisitalization_string~-2.5~0.75~7.5~0~115~0~15"
-readonly TERMINAL_THREE_INITIALIZATION_STRING="terminal_inisitalization_string~6.5~0.75~-2.5~0~250~0~15"
+readonly TERMINAL_ONE_INITIALIZATION_STRING="terminal_inisitalization_string~-4.5~0.75~-5.5~0~22~0~15"
+readonly TERMINAL_TWO_INITIALIZATION_STRING="terminal_inisitalization_string~-2.5~0.75~7.5~0~145~0~15"
+readonly TERMINAL_THREE_INITIALIZATION_STRING="terminal_inisitalization_string~6.5~0.75~-2.5~0~265~0~15"
 
 #------------------------------------------------------------------------------------------
 # MAIN

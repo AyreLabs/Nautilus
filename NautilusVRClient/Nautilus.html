@@ -497,7 +497,7 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
             newTerminalHTMLObject.setAttribute('id', terminalString);
             newTerminalHTMLObject.setAttribute('width', "10");
             newTerminalHTMLObject.setAttribute('wrap-count', "200");
-            newTerminalHTMLObject.setAttribute('color', "red");
+            newTerminalHTMLObject.setAttribute('color', "#00FF00");
             mainSceneToInsertNewTerminal.appendChild(newTerminalHTMLObject);
         }
     
@@ -505,7 +505,12 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
             console.log(terminalInitialzationString);
             var messageComponentsForPositionAndRotation = terminalInitialzationString.split(",");
             var positionString = messageComponentsForPositionAndRotation[0]+" "+messageComponentsForPositionAndRotation[1]+" "+messageComponentsForPositionAndRotation[2];
-            var rotationString = messageComponentsForPositionAndRotation[3]+" "+messageComponentsForPositionAndRotation[4]+" "+messageComponentsForPositionAndRotation[5];
+            var rotationString = "";
+	    //if(terminalID == "terminal2") {
+		//rotationString = "0 265 0";
+	    //} else {
+                rotationString = messageComponentsForPositionAndRotation[3]+" "+messageComponentsForPositionAndRotation[4]+" "+messageComponentsForPositionAndRotation[5];
+	    //}
             var widthString = messageComponentsForPositionAndRotation[6];
             var terminalElement = document.getElementById(terminalID);
             console.log(positionString);
