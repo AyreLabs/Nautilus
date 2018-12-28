@@ -21,6 +21,8 @@ public class NautilusKey {
     private static final int NAUTILUS_KEY_CODE_ENCODING_UPPER_BOUND = 1123;
     private static final int FUNCTION_KEY_ENCODING_BASE = 1000;
     private static final int NAUTILUS_KEY_CODE_ENTER_KEY = 10;
+    private static final int NAUTILUS_KEY_CODE_DOUBLE_QUOTE_KEY = 34;
+    private static final int NAUTILUS_KEY_CODE_BACKSLASH_KEY = 92;
     private static final int NAUTILUS_KEY_CODE_BACKSPACE_KEY = 8;
     private static final int NAUTILUS_KEY_CODE_ESCAPE_KEY = 1027;
     private static final int NAUTILUS_KEY_CODE_LEFT_ARROW_KEY = 1037;
@@ -58,6 +60,14 @@ public class NautilusKey {
 
     public boolean isEnterKey() {
         return this.nautilusKeyCode == NAUTILUS_KEY_CODE_ENTER_KEY;
+    }
+
+    public boolean isDoubleQuoteKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_DOUBLE_QUOTE_KEY;
+    }
+
+    public boolean isBackslashKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_BACKSLASH_KEY;
     }
 
     public boolean isBackspaceKey() {

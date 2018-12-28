@@ -102,6 +102,10 @@ public class NautilusRoomTerminal {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectReturnIntoSTDINForTerminalWithID");
         } else if (keyThatWasPressed.isEscapeKey()) {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectEscapeIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isDoubleQuoteKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectDoubleQuoteIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isBackslashKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectBackslashIntoSTDINForTerminalWithID");
         } else {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommandWithInputParameter("InjectSTDINForTerminalWithIDAndInjectedInput", "\"" + keyThatWasPressed.getStringRepresentationOfKey() + "\"");
         } 
