@@ -529,7 +529,7 @@ function AndroidWakeLock(){var A=document.createElement("video");A.addEventListe
             var terminalMessageString = initialMessageComponents[1];
             var terminalString = "terminal"+terminalNumberString;
             var terminalElement = document.getElementById(terminalString);
-	    var encodedTerminalMessageString = terminalMessageString.replace(/^/gm, "|");//.replace(/ /g, "'\xa0'");//.replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+	    var encodedTerminalMessageString = terminalMessageString.replace(/^/gm, "|").replace(/\\t/g,'~t').replace(/\\n/g,'~n');//.replace(/ /g, "'\xa0'");//.replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
             terminalElement.setAttribute('value', encodedTerminalMessageString);
         }
             

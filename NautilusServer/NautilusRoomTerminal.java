@@ -133,7 +133,7 @@ public class NautilusRoomTerminal {
 
     public String constructNautilusRoomTerminalDisplayStateUpdateMessage() {
         String currentTerminalDisplay = this.constructCurrentDisplayString();
-        System.out.printf("AAAAAAAAAAA:%s\n", currentTerminalDisplay);
+        //System.out.printf("AAAAAAAAAAA:%s\n", currentTerminalDisplay);
         return NautilusVRProtocol.nautilusRoomTerminalDisplayStateUpdateMessageWithTerminalIDAndDisplayString(this.terminalID, currentTerminalDisplay);
     }
 
