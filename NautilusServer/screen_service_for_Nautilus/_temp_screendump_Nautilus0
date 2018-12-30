@@ -1,11 +1,5 @@
-WINDOW_INFO:cursor=31,23|viewport=80,24
+WINDOW_INFO:cursor=50,23|viewport=80,24
 
-public class TicTacApplication {
-
-    static public void main(String[] commandLineArguements) {
-        System.out.println("Hello World");
-    }
-}
 ~
 ~
 ~
@@ -22,4 +16,10 @@ public class TicTacApplication {
 ~
 ~
 ~
-root@Nautilus:~/TicTacProject#
+~
+~
+~
+~
+~
+~
+root@Nautilus:~/TicTacProject#  qqqs  qw1dsdswegH?f

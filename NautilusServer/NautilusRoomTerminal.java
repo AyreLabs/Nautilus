@@ -100,6 +100,9 @@ public class NautilusRoomTerminal {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectBackspaceIntoSTDINForTerminalWithID");
         } else if (keyThatWasPressed.isEnterKey()) {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectReturnIntoSTDINForTerminalWithID");
+        } else if (keyThatWasPressed.isTabKey()) {
+            this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectTabIntoSTDINForTerminalWithID");
+
         } else if (keyThatWasPressed.isUpArrowKey()) {
             this.terminalServiceForThisNautilusTerminal.runResponselessNautilusTerminalServiceCommand("InjectUpKeyIntoSTDINForTerminalWithID");
         } else if (keyThatWasPressed.isRightArrowKey()) {

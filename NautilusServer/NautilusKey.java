@@ -26,6 +26,7 @@ public class NautilusKey {
     private static final int NAUTILUS_KEY_CODE_BACKSPACE_KEY = 8;
     private static final int NAUTILUS_KEY_CODE_ESCAPE_KEY = 1027;
     private static final int NAUTILUS_KEY_CODE_LEFT_ARROW_KEY = 1037;
+    private static final int NAUTILUS_KEY_CODE_TAB_KEY = 9;
     private static final int NAUTILUS_KEY_CODE_RIGHT_ARROW_KEY = 1039;
     private static final int NAUTILUS_KEY_CODE_UP_ARROW_KEY = 1038;
     private static final int NAUTILUS_KEY_CODE_DOWN_ARROW_KEY = 1040;
@@ -62,6 +63,10 @@ public class NautilusKey {
 
     public boolean isEnterKey() {
         return this.nautilusKeyCode == NAUTILUS_KEY_CODE_ENTER_KEY;
+    }
+
+    public boolean isTabKey() {
+        return this.nautilusKeyCode == NAUTILUS_KEY_CODE_TAB_KEY;
     }
 
     public boolean isDoubleQuoteKey() {
