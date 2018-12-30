@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./SfN_InjectSTDINForTerminalWithIDAndInjectedInput.sh $1 $'\x1b'"OC"
+./SSfN_InjectSTDINForTerminalWithIDAndInjectedInput.sh $1 $'\x1b'"OC"

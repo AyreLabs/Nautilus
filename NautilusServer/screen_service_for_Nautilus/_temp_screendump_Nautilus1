@@ -1,25 +1,25 @@
-WINDOW_INFO:cursor=69,0|viewport=80,24
-root@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus#
+WINDOW_INFO:cursor=42,4|viewport=80,24
 
+public class TicTacApplication {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    static public void main(String[] commandLineArguements) {
+        System.out.println("Hello World");
+    }
+}
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+-- INSERT --                                                  5,43          All
