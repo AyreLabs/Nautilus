@@ -1,25 +1,25 @@
-WINDOW_INFO:cursor=50,23|viewport=80,24
-
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-~
-root@Nautilus:~/TicTacProject#  qqqs  qw1dsdswegH?f
+WINDOW_INFO:cursor=44,23|viewport=80,24
+Board.java:31: error: cannot find symbol
+         return attemptToInsertMarkerAtPositionXYReturningSuccess(Y_MARKER, posi
+tionX, positionY);
+                                                                  ^
+  symbol:   variable Y_MARKER
+  location: class Board
+Board.java:35: error: cannot find symbol
+        return checkIfBoardHasMarkerInLineOfThree(X_MARKER);
+                                                  ^
+  symbol:   variable X_MARKER
+  location: class Board
+Board.java:39: error: cannot find symbol
+        return checkIfBoardHasMarkerInLineOfThree(Y_MARKER);
+                                                  ^
+  symbol:   variable Y_MARKER
+  location: class Board
+Board.java:44: error: cannot find symbol
+                                || markerIsAtPositionXY(NO_MARKER, positionX, po
+sitionY);
+                                                        ^
+  symbol:   variable NO_MARKER
+  location: class Board
+6 errors
+root@Nautilus:~/firstProject/TicTacProject#

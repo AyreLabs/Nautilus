@@ -1,25 +1,25 @@
-WINDOW_INFO:cursor=72,23|viewport=80,24
-public class TicTacApplication {
+WINDOW_INFO:cursor=69,0|viewport=80,24
+root@Nautilus:~/Nautilus/NautilusServer/screen_service_for_Nautilus#
 
-    static public void main(String[] commandLineArguements) {
-        System.out.println("Hello World");
-        if(!correctCommandLineArguments(commandLineArguements)) {
-            System.out.println("incorrect initialization arguements");
-        } else {
-            String runOrTestFlag = commandLineArguements[1];
-            if(runOrTestFlag.equals("run")) {
-                TicTacApplication.runApplication();
-            } else
-            if(runOrTestFlag.equals("test")) {
-                TicTacApplication.testApplication();
-            }
-        }
-    }
 
-    public static void runApplication() {
-        System.out.println("Running application...");
-    }
 
-    public static void testApplication() {
-"TicTacApplication.java" 39L, 1323C written
-root@Nautilus:~/firstProject/TicTacProject# javac TicTacApplication.java
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
